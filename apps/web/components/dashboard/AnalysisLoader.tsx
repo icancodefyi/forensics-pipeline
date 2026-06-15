@@ -226,19 +226,6 @@ export const AnalysisLoader: React.FC<AnalysisLoaderProps> = ({
         </div>
       </footer>
 
-      <style jsx global>{`
-        @keyframes glitch-light {
-          0% { transform: translate(0); opacity: 1; }
-          20% { transform: translate(-3px, 1px); opacity: 0.8; }
-          40% { transform: translate(3px, -1px); opacity: 0.9; }
-          60% { transform: translate(-1px, 2px); opacity: 0.7; }
-          80% { transform: translate(1px, -2px); opacity: 0.9; }
-          100% { transform: translate(0); opacity: 1; }
-        }
-        .animate-glitch-light {
-          animation: glitch-light 0.5s ease-in-out infinite;
-        }
-      `}</style>
     </div>
   );
 };
