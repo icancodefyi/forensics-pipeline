@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { ReportWorkflowProvider } from "@/components/report/ReportWorkflowContext";
 import { ReportWorkflowShell } from "@/components/report/ReportWorkflowShell";
-
+import LenisProvider from "@/providers/LenisProvider";
 export default async function ReportCaseLayout({
   children,
   params,
@@ -13,7 +13,9 @@ export default async function ReportCaseLayout({
 
   return (
     <ReportWorkflowProvider caseId={caseId}>
-      <ReportWorkflowShell>{children}</ReportWorkflowShell>
+      <ReportWorkflowShell>
+        <LenisProvider>{children}</LenisProvider>
+      </ReportWorkflowShell>
     </ReportWorkflowProvider>
   );
 }
