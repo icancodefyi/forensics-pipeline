@@ -47,6 +47,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ ok: true, insertedCase: result.insertedCase });
   } catch {
-    return NextResponse.json({ error: "Failed to track claim event" }, { status: 500 });
+    // Mongo optional locally — do not fail the leak/report flow after Turbopack/Mongo hiccups.
+    return NextResponse.json({ ok: true, insertedCase: false, skipped: true });
   }
 }
