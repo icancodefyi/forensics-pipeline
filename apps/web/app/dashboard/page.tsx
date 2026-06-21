@@ -2,8 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { PlatformDistribution } from "@/components/dashboard/PlatformDistribution";
-import { ThreatMeter } from "@/components/dashboard/ThreatMeter";
+import { MonitoringPrototypeCard } from "@/components/dashboard/MonitoringPrototypeCard";
 
 interface SavedCase {
   caseId: string;
@@ -91,13 +90,13 @@ function lifecycleLabel(stage: "removed" | "escalated" | "rejected" | "none"): s
   if (stage === "removed") return "Removed";
   if (stage === "escalated") return "Escalated";
   if (stage === "rejected") return "Rejected";
-  return "No Audit Trail";
+  return "No audit trail";
 }
 
 function eventLabel(eventType: string): string {
-  if (eventType === "case_created") return "Case Created";
-  if (eventType === "case_saved") return "Case Saved";
-  if (eventType === "report_viewed") return "Report Viewed";
+  if (eventType === "case_created") return "Case opened";
+  if (eventType === "case_saved") return "Report saved";
+  if (eventType === "report_viewed") return "Report viewed";
   return eventType;
 }
 
@@ -135,7 +134,7 @@ export default function DashboardPage() {
           Sniffer
         </Link>
         <span className="text-[#d4cfc9]">/</span>
-        <span className="text-[13px] text-[#9ca3af]">Case Intelligence</span>
+        <span className="text-[13px] text-[#9ca3af]">Post-removal monitoring</span>
         <div className="ml-auto flex items-center gap-3">
           <Link
             href="/"
@@ -148,122 +147,106 @@ export default function DashboardPage() {
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
         <div className="relative overflow-hidden rounded-2xl border border-[#e8e4de] bg-white mb-8">
-          <div className="absolute -top-20 -right-20 w-80 h-80 rounded-full bg-linear-to-br from-orange-100 to-red-100 opacity-60" />
-          <div className="absolute -bottom-16 -left-16 w-72 h-72 rounded-full bg-linear-to-br from-indigo-100 to-sky-100 opacity-60" />
+          <div className="absolute -top-20 -right-20 w-80 h-80 rounded-full bg-linear-to-br from-indigo-100 to-sky-100 opacity-70" />
+          <div className="absolute -bottom-16 -left-16 w-72 h-72 rounded-full bg-linear-to-br from-slate-100 to-indigo-50 opacity-60" />
           <div className="relative px-6 py-7 sm:px-8 sm:py-8 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
             <div>
-              <p className="font-mono text-[10px] text-[#a8a29e] uppercase tracking-widest mb-3">Dashboard</p>
+              <p className="font-mono text-[10px] text-[#a8a29e] uppercase tracking-widest mb-3">Watch centre</p>
               <h1 className="text-[28px] sm:text-[34px] leading-tight font-semibold text-[#0a0a0a] tracking-tight">
-                Investigation Control Center
+                Post-removal monitoring
               </h1>
               <p className="text-[13px] text-[#6b7280] mt-2 max-w-2xl">
-                Live telemetry from case database, claim events, and your saved report portfolio.
+                Track cases after removal, review activity, and see how repeat-upload alerts would surface on your watchlist (prototype telemetry below).
               </p>
             </div>
             <div className="grid grid-cols-2 gap-2.5 min-w-55">
               <MetricTile
-                label="Total Cases"
+                label="Cases on file"
                 value={loadingOverview ? "..." : String(overview?.totals.totalCases ?? 0)}
               />
               <MetricTile
-                label="Saved Cases"
+                label="Saved reports"
                 value={loadingOverview ? "..." : String(overview?.totals.savedCases ?? 0)}
               />
               <MetricTile
-                label="Events"
+                label="Activity events"
                 value={loadingOverview ? "..." : String(overview?.totals.totalEvents ?? 0)}
               />
               <MetricTile
-                label="Evidence Coverage"
-                value={loadingOverview ? "..." : `${overview?.totals.evidenceCoveragePct ?? 0}%`}
+                label="Removal trail"
+                value={loadingOverview ? "..." : String(overview?.totals.casesWithLifecycleEvidence ?? 0)}
               />
             </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 xl:grid-cols-5 gap-4 sm:gap-5">
-          <div className="xl:col-span-3">
-            <ThreatMeter
-              score={overview?.totals.deepfakeRate ?? 0}
-              aiDetections={overview?.totals.caseCreated ?? 0}
-              tamperSignals={overview?.totals.caseSaved ?? 0}
-              registryHits={overview?.totals.reportViewed ?? 0}
-            />
-          </div>
-          <div className="xl:col-span-2 rounded-xl border border-[#e8e4de] bg-white p-5">
+        <div className="mb-8">
+          <MonitoringPrototypeCard />
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-5 mb-4 sm:mb-5">
+          <div className="lg:col-span-1 rounded-xl border border-[#e8e4de] bg-white p-5">
             <div className="flex items-center justify-between mb-5">
-              <p className="text-[10px] font-mono uppercase tracking-widest text-[#a8a29e]">Case Status Breakdown</p>
-              <span className="text-[10px] font-mono text-[#c4bdb5]">Live DB</span>
+              <p className="text-[10px] font-mono uppercase tracking-widest text-[#a8a29e]">Case status</p>
+              <span className="text-[10px] font-mono text-[#c4bdb5]">DB</span>
             </div>
             <div className="space-y-3.5">
               {(overview?.breakdown.status ?? []).map((row) => (
                 <div key={row.name}>
                   <div className="flex items-center justify-between mb-1.5">
                     <div className="text-[12px] text-[#374151] capitalize">{row.name}</div>
-                    <div className="font-mono text-[11px] text-[#6b7280] tabular-nums">{row.count} ({row.pct}%)</div>
+                    <div className="font-mono text-[11px] text-[#6b7280] tabular-nums">
+                      {row.count} ({row.pct}%)
+                    </div>
                   </div>
                   <div className="h-2 rounded-full bg-[#f5f3f0] overflow-hidden">
                     <div
-                      className="h-2 rounded-full bg-linear-to-r from-[#f97316] to-[#ef4444]"
+                      className="h-2 rounded-full bg-linear-to-r from-indigo-400 to-indigo-600"
                       style={{ width: `${Math.max(4, row.pct)}%` }}
                     />
                   </div>
                 </div>
               ))}
               {!loadingOverview && (overview?.breakdown.status ?? []).length === 0 && (
-                <p className="text-[12px] text-[#9ca3af]">No status data found in cases collection.</p>
+                <p className="text-[12px] text-[#9ca3af]">No status rows yet.</p>
               )}
-              {loadingOverview && <p className="text-[12px] text-[#9ca3af]">Loading status metrics...</p>}
+              {loadingOverview && <p className="text-[12px] text-[#9ca3af]">Loading…</p>}
             </div>
           </div>
-        </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 sm:gap-5 mt-4 sm:mt-5">
-          <div className="lg:col-span-3">
-            <PlatformDistribution
-              items={(overview?.breakdown.platforms ?? []).map((item) => ({
-                name: item.name,
-                cases: item.count,
-                pct: item.pct,
-              }))}
-              totalLabel={loadingOverview ? "Loading totals..." : `${overview?.totals.totalCases ?? 0} total cases analysed`}
-            />
-          </div>
-          <div className="lg:col-span-2 rounded-xl border border-[#e8e4de] bg-white p-5">
-            <div className="flex items-center justify-between mb-5">
-              <p className="text-[10px] font-mono uppercase tracking-widest text-[#a8a29e]">Issue Type Signals</p>
-              <span className="text-[10px] font-mono text-[#c4bdb5]">Top Categories</span>
+          <section className="lg:col-span-2 rounded-xl border border-[#e8e4de] bg-white p-5">
+            <div className="flex items-center justify-between mb-4">
+              <p className="text-[10px] font-mono uppercase tracking-widest text-[#a8a29e]">Lifecycle summary</p>
+              <span className="text-[10px] font-mono text-[#c4bdb5]">Escalations & removal</span>
             </div>
-            <div className="space-y-2.5">
-              {(overview?.breakdown.issueTypes ?? []).map((row, idx) => (
-                <div key={row.name} className="flex items-center gap-3">
-                  <span className="font-mono text-[9px] text-[#c4bdb5] w-4 tabular-nums">{String(idx + 1).padStart(2, "0")}</span>
-                  <span className="text-[12px] text-[#374151] truncate flex-1">{row.name}</span>
-                  <span className="font-mono text-[11px] text-[#6b7280] tabular-nums">{row.count}</span>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+              {(overview?.breakdown.lifecycle ?? []).map((item) => (
+                <div key={item.name} className="rounded-lg border border-[#f0ede8] bg-[#fcfcfb] px-3 py-3">
+                  <p className="text-[9px] font-mono uppercase tracking-widest text-[#a8a29e] leading-tight">{item.name}</p>
+                  <p className="text-[20px] font-semibold text-[#111827] mt-1.5 tabular-nums">{item.count}</p>
                 </div>
               ))}
-              {!loadingOverview && (overview?.breakdown.issueTypes ?? []).length === 0 && (
-                <p className="text-[12px] text-[#9ca3af]">No issue_type data available.</p>
-              )}
-              {loadingOverview && <p className="text-[12px] text-[#9ca3af]">Loading issue type metrics...</p>}
             </div>
-          </div>
+            {!loadingOverview && (overview?.breakdown.lifecycle ?? []).length === 0 && (
+              <p className="text-[12px] text-[#9ca3af] mt-3">No lifecycle events yet.</p>
+            )}
+          </section>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 sm:gap-5 mt-4 sm:mt-5">
           <section className="lg:col-span-3 rounded-xl border border-[#e8e4de] bg-white p-5">
             <div className="mb-4 rounded-lg border border-[#f0ede8] bg-[#fcfcfb] px-3 py-2.5">
               <p className="text-[11px] text-[#6b7280] leading-relaxed">
-                Declared case status is informational only. Legal claims like escalation or removal are shown only when matching lifecycle events exist in claim_events.
+                Status is informational. Removal and escalation rows reflect lifecycle events in your database when present.
               </p>
             </div>
             <div className="flex items-center justify-between mb-4">
-              <p className="text-[10px] font-mono uppercase tracking-widest text-[#a8a29e]">Recent Cases from Database</p>
+              <p className="text-[10px] font-mono uppercase tracking-widest text-[#a8a29e]">Recent cases</p>
               <Link
-                href="/start"
+                href="/leak"
                 className="text-[12px] font-medium text-[#0a0a0a] border border-[#e8e4de] px-3 py-1.5 rounded-lg hover:bg-[#fafaf8]"
               >
-                New Investigation
+                New leak case
               </Link>
             </div>
             <div className="overflow-x-auto">
@@ -272,10 +255,10 @@ export default function DashboardPage() {
                   <tr className="text-left border-b border-[#f0ede8]">
                     <th className="py-2 text-[10px] font-mono uppercase tracking-widest text-[#b0a89e]">Case</th>
                     <th className="py-2 text-[10px] font-mono uppercase tracking-widest text-[#b0a89e]">Declared</th>
-                    <th className="py-2 text-[10px] font-mono uppercase tracking-widest text-[#b0a89e]">Audit Evidence</th>
+                    <th className="py-2 text-[10px] font-mono uppercase tracking-widest text-[#b0a89e]">Lifecycle</th>
                     <th className="py-2 text-[10px] font-mono uppercase tracking-widest text-[#b0a89e]">Platform</th>
                     <th className="py-2 text-[10px] font-mono uppercase tracking-widest text-[#b0a89e]">Issue</th>
-                    <th className="py-2 text-[10px] font-mono uppercase tracking-widest text-[#b0a89e]">Created</th>
+                    <th className="py-2 text-[10px] font-mono uppercase tracking-widest text-[#b0a89e]">Opened</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -288,12 +271,16 @@ export default function DashboardPage() {
                         <div className="text-[11px] text-[#9ca3af] mt-0.5">{row.pipelineType}</div>
                       </td>
                       <td className="py-3 pr-3">
-                        <span className={`inline-flex text-[10px] font-mono uppercase px-2 py-0.5 rounded border ${statusTone(row.status)}`}>
+                        <span
+                          className={`inline-flex text-[10px] font-mono uppercase px-2 py-0.5 rounded border ${statusTone(row.status)}`}
+                        >
                           {row.status}
                         </span>
                       </td>
                       <td className="py-3 pr-3">
-                        <span className={`inline-flex text-[10px] font-mono uppercase px-2 py-0.5 rounded border ${lifecycleTone(row.lifecycleStage)}`}>
+                        <span
+                          className={`inline-flex text-[10px] font-mono uppercase px-2 py-0.5 rounded border ${lifecycleTone(row.lifecycleStage)}`}
+                        >
                           {lifecycleLabel(row.lifecycleStage)}
                         </span>
                         {row.lifecycleAt && (
@@ -309,33 +296,38 @@ export default function DashboardPage() {
               </table>
             </div>
             {!loadingOverview && (overview?.recentCases ?? []).length === 0 && (
-              <p className="text-[12px] text-[#9ca3af] mt-3">No case rows available in the cases collection yet.</p>
+              <p className="text-[12px] text-[#9ca3af] mt-3">No cases in the database yet.</p>
             )}
           </section>
 
           <section className="lg:col-span-2 rounded-xl border border-[#e8e4de] bg-white p-5">
             <div className="flex items-center justify-between mb-4">
-              <p className="text-[10px] font-mono uppercase tracking-widest text-[#a8a29e]">Claim Activity Stream</p>
+              <p className="text-[10px] font-mono uppercase tracking-widest text-[#a8a29e]">Activity stream</p>
               <span className="inline-flex items-center gap-1.5 text-[10px] font-mono text-[#9ca3af]">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                LIVE
+                Live
               </span>
             </div>
             <div className="max-h-90 overflow-y-auto space-y-2 pr-1">
               {(overview?.recentEvents ?? []).map((event, idx) => (
-                <div key={`${event.caseId}-${event.createdAt}-${idx}`} className="border border-[#f0ede8] rounded-lg p-2.5 bg-[#fcfcfb]">
+                <div
+                  key={`${event.caseId}-${event.createdAt}-${idx}`}
+                  className="border border-[#f0ede8] rounded-lg p-2.5 bg-[#fcfcfb]"
+                >
                   <div className="flex items-center justify-between gap-2">
                     <span className="text-[11px] font-medium text-[#374151]">{eventLabel(event.eventType)}</span>
                     <span className="text-[10px] text-[#9ca3af]">{formatDateTime(event.createdAt)}</span>
                   </div>
                   <div className="text-[10.5px] text-[#9ca3af] mt-1 font-mono">{event.caseId}</div>
-                  <div className="text-[11px] text-[#6b7280] mt-1">{event.platform} · {event.issueType}</div>
+                  <div className="text-[11px] text-[#6b7280] mt-1">
+                    {event.platform} · {event.issueType}
+                  </div>
                 </div>
               ))}
               {!loadingOverview && (overview?.recentEvents ?? []).length === 0 && (
-                <p className="text-[12px] text-[#9ca3af]">No claim event activity recorded yet.</p>
+                <p className="text-[12px] text-[#9ca3af]">No activity yet.</p>
               )}
-              {loadingOverview && <p className="text-[12px] text-[#9ca3af]">Loading event stream...</p>}
+              {loadingOverview && <p className="text-[12px] text-[#9ca3af]">Loading…</p>}
             </div>
           </section>
         </div>
@@ -343,20 +335,20 @@ export default function DashboardPage() {
         <section className="rounded-xl border border-[#e8e4de] bg-white p-5 mt-4 sm:mt-5">
           <div className="flex items-center justify-between mb-4 gap-3">
             <div>
-              <p className="text-[10px] font-mono uppercase tracking-widest text-[#a8a29e]">All Cases</p>
+              <p className="text-[10px] font-mono uppercase tracking-widest text-[#a8a29e]">Saved reports</p>
               <p className="text-[12px] text-[#6b7280] mt-1">
                 {loadingCases
-                  ? "Loading saved cases..."
+                  ? "Loading…"
                   : cases.length === 0
-                    ? "No saved reports yet."
-                    : `${cases.length} investigation report${cases.length === 1 ? "" : "s"} saved.`}
+                    ? "Nothing saved yet."
+                    : `${cases.length} saved report${cases.length === 1 ? "" : "s"}.`}
               </p>
             </div>
             <Link
-              href="/start"
+              href="/leak"
               className="shrink-0 text-[12.5px] font-medium bg-[#0a0a0a] text-white px-4 py-2 rounded-full hover:bg-[#1a1a1a] transition-colors"
             >
-              Start New
+              Open leak flow
             </Link>
           </div>
 
@@ -368,10 +360,8 @@ export default function DashboardPage() {
             </div>
           ) : cases.length === 0 ? (
             <div className="border border-dashed border-[#e8e4de] rounded-xl p-10 text-center">
-              <p className="text-[13px] font-medium text-[#374151] mb-1.5">No saved cases yet</p>
-              <p className="text-[12px] text-[#9ca3af] max-w-xs mx-auto">
-                Save any investigation report and it will appear here.
-              </p>
+              <p className="text-[13px] font-medium text-[#374151] mb-1.5">No saved reports</p>
+              <p className="text-[12px] text-[#9ca3af] max-w-xs mx-auto">Save a report from an investigation to list it here.</p>
             </div>
           ) : (
             <div className="space-y-2">
@@ -386,28 +376,10 @@ export default function DashboardPage() {
           )}
         </section>
 
-        <section className="rounded-xl border border-[#e8e4de] bg-white p-5 mt-4 sm:mt-5">
-          <div className="flex items-center justify-between mb-4">
-            <p className="text-[10px] font-mono uppercase tracking-widest text-[#a8a29e]">Lifecycle Evidence Summary</p>
-            <span className="text-[10px] font-mono text-[#c4bdb5]">Audit Readiness</span>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            {(overview?.breakdown.lifecycle ?? []).map((item) => (
-              <div key={item.name} className="rounded-lg border border-[#f0ede8] bg-[#fcfcfb] px-3 py-3">
-                <p className="text-[10px] font-mono uppercase tracking-widest text-[#a8a29e]">{item.name}</p>
-                <p className="text-[22px] font-semibold text-[#111827] mt-2 tabular-nums">{item.count}</p>
-              </div>
-            ))}
-          </div>
-          <p className="text-[11px] text-[#9ca3af] mt-3">
-            Cases with auditable lifecycle evidence: {overview?.totals.casesWithLifecycleEvidence ?? 0} / {overview?.totals.totalCases ?? 0}
-          </p>
-        </section>
-
         <div className="border-t border-[#e8e4de] mt-10 pt-6 flex items-center justify-between">
-          <p className="font-mono text-[10px] text-[#c4bdb5]">SNIFFER · IMPIC LABS · 2026</p>
-          <Link href="/start" className="text-[12px] text-indigo-600 hover:underline">
-            New investigation -&gt;
+          <p className="font-mono text-[10px] text-[#c4bdb5]">SNIFFER FORENSICS · SFIT · 2026</p>
+          <Link href="/leak" className="text-[12px] text-indigo-600 hover:underline">
+            New leak case →
           </Link>
         </div>
       </main>
@@ -445,8 +417,7 @@ function CaseRow({
     onRemove(savedCase.caseId);
   }
 
-  const displayRef =
-    savedCase.caseRef ?? `SNF-${savedCase.caseId.slice(0, 8).toUpperCase()}`;
+  const displayRef = savedCase.caseRef ?? `SNF-${savedCase.caseId.slice(0, 8).toUpperCase()}`;
 
   return (
     <div className="border border-[#e8e4de] rounded-xl bg-white px-4 py-3.5 flex items-center gap-4 group hover:border-[#c4bdb5] transition-colors">
@@ -462,21 +433,17 @@ function CaseRow({
           <p className="font-mono text-[11.5px] font-semibold text-[#374151] group-hover/link:text-[#0a0a0a] transition-colors">
             {displayRef}
           </p>
-          {savedCase.domain && (
-            <p className="text-[11px] text-[#9ca3af] mt-0.5 truncate">{savedCase.domain}</p>
-          )}
+          {savedCase.domain && <p className="text-[11px] text-[#9ca3af] mt-0.5 truncate">{savedCase.domain}</p>}
         </Link>
       </div>
 
       <div className="flex items-center gap-3 shrink-0">
         <span className="hidden sm:block font-mono text-[10px] text-[#9ca3af]">{date}</span>
-        <Link
-          href={`/report/${savedCase.caseId}`}
-          className="text-[12px] text-indigo-600 hover:underline"
-        >
+        <Link href={`/report/${savedCase.caseId}`} className="text-[12px] text-indigo-600 hover:underline">
           View
         </Link>
         <button
+          type="button"
           onClick={handleRemove}
           disabled={removing}
           className="text-[12px] text-[#9ca3af] hover:text-red-600 transition-colors opacity-0 group-hover:opacity-100 disabled:opacity-40"
