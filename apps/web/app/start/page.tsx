@@ -67,7 +67,50 @@ export default function StartPage() {
         {/* Pipeline cards */}
         <div className="flex flex-col gap-4">
 
-          {/* Pipeline 1 — Deepfake */}
+     {/* Pipeline 1 — NCII */}
+     <Link
+            href="/leak"
+            className="group relative block p-7 rounded-2xl border border-[#e8e4de] bg-white hover:border-rose-400 hover:shadow-[0_0_0_3px_rgba(244,63,94,0.07)] transition-all"
+          >
+            <div className="flex items-start gap-5">
+              <div className="shrink-0 w-12 h-12 rounded-xl bg-rose-50 border border-rose-100 flex items-center justify-center mt-0.5">
+                <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="#f43f5e" strokeWidth="1.75">
+                  <circle cx="12" cy="12" r="10" strokeLinecap="round" />
+                  <path d="M2 12h4M18 12h4M12 2v4M12 18v4" strokeLinecap="round" />
+                  <circle cx="12" cy="12" r="3" />
+                </svg>
+              </div>
+
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2.5 mb-1.5">
+                  <p className="text-[17px] font-semibold text-[#0a0a0a] tracking-tight">
+                    {t.start.nciiTitle}
+                  </p>
+                  <span className="shrink-0 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-rose-50 border border-rose-100 font-mono text-[9.5px] text-rose-600 uppercase tracking-wider">
+                    Leak Scan
+                  </span>
+                </div>
+                <p className="text-[13.5px] text-[#6b7280] leading-relaxed mb-4">
+                  {t.start.nciiDesc}
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {["Network Domain Scan", "Visual Match Detection", "CDN Intelligence", "DMCA Contacts", "Removal Guidance"].map((f) => (
+                    <span key={f} className="px-2.5 py-1 rounded-full border border-[#e8e4de] bg-[#fafaf8] text-[11px] text-[#6b7280] font-mono">
+                      {f}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="shrink-0 w-8 h-8 rounded-full border border-[#e8e4de] bg-[#fafaf8] group-hover:border-rose-300 group-hover:bg-rose-50 flex items-center justify-center transition-colors mt-0.5">
+                <svg width="13" height="13" fill="none" stroke="#f43f5e" strokeWidth="2.5" viewBox="0 0 24 24">
+                  <path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </div>
+            </div>
+          </Link>
+
+          {/* Pipeline 2 — Deepfake */}
           <Link
             href="/verify/upload"
             className="group relative block p-7 rounded-2xl border border-[#e8e4de] bg-white hover:border-indigo-400 hover:shadow-[0_0_0_3px_rgba(99,102,241,0.08)] transition-all"
@@ -110,48 +153,7 @@ export default function StartPage() {
             </div>
           </Link>
 
-          {/* Pipeline 2 — NCII */}
-          <Link
-            href="/leak"
-            className="group relative block p-7 rounded-2xl border border-[#e8e4de] bg-white hover:border-rose-400 hover:shadow-[0_0_0_3px_rgba(244,63,94,0.07)] transition-all"
-          >
-            <div className="flex items-start gap-5">
-              <div className="shrink-0 w-12 h-12 rounded-xl bg-rose-50 border border-rose-100 flex items-center justify-center mt-0.5">
-                <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="#f43f5e" strokeWidth="1.75">
-                  <circle cx="12" cy="12" r="10" strokeLinecap="round" />
-                  <path d="M2 12h4M18 12h4M12 2v4M12 18v4" strokeLinecap="round" />
-                  <circle cx="12" cy="12" r="3" />
-                </svg>
-              </div>
-
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2.5 mb-1.5">
-                  <p className="text-[17px] font-semibold text-[#0a0a0a] tracking-tight">
-                    {t.start.nciiTitle}
-                  </p>
-                  <span className="shrink-0 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-rose-50 border border-rose-100 font-mono text-[9.5px] text-rose-600 uppercase tracking-wider">
-                    Leak Scan
-                  </span>
-                </div>
-                <p className="text-[13.5px] text-[#6b7280] leading-relaxed mb-4">
-                  {t.start.nciiDesc}
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {["Network Domain Scan", "Visual Match Detection", "CDN Intelligence", "DMCA Contacts", "Removal Guidance"].map((f) => (
-                    <span key={f} className="px-2.5 py-1 rounded-full border border-[#e8e4de] bg-[#fafaf8] text-[11px] text-[#6b7280] font-mono">
-                      {f}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              <div className="shrink-0 w-8 h-8 rounded-full border border-[#e8e4de] bg-[#fafaf8] group-hover:border-rose-300 group-hover:bg-rose-50 flex items-center justify-center transition-colors mt-0.5">
-                <svg width="13" height="13" fill="none" stroke="#f43f5e" strokeWidth="2.5" viewBox="0 0 24 24">
-                  <path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </div>
-            </div>
-          </Link>
+     
 
           {/* Pipeline 3 — Screenshot / Evidence */}
           <Link

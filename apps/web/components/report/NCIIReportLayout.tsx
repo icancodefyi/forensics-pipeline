@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ContentTrace } from "./ContentTrace";
 import { LeakActionConsole } from "./LeakActionConsole";
+import { ReportWellbeingLegal } from "./ReportWellbeingLegal";
 import type { CaseData } from "./types";
 import { buildCaseRef } from "./utils";
 import { formatDate } from "./utils";
@@ -51,7 +52,7 @@ export function NCIIReportLayout({
   return (
     <div className="min-h-screen bg-[#fafaf8] print:bg-white">
       {/* ── Screen navigation bar ──────────────────────────────────────────── */}
-      <header className="sticky top-0 z-20 border-b border-[#e8e4de] bg-white/95 backdrop-blur-sm px-4 py-3.5 print:hidden sm:px-6">
+      <header className="sticky top-0 z-20 border-b border-[#e8e4de]/80 bg-white/90 backdrop-blur-md px-4 py-3.5 print:hidden sm:px-6 shadow-[0_8px_30px_-12px_rgba(15,23,42,0.08)]">
         <div className="mx-auto flex max-w-4xl items-center gap-3">
           <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
             <Image src="/logo.png" alt="Sniffer" width={24} height={24} />
@@ -115,7 +116,7 @@ export function NCIIReportLayout({
         </div>
       </div>
 
-      <main className="mx-auto flex max-w-4xl flex-col gap-10 px-4 py-10 print:max-w-none print:px-0 print:py-0 print:gap-8 sm:px-6">
+      <main className="mx-auto flex max-w-4xl flex-col gap-12 px-4 py-10 pb-16 print:max-w-none print:px-0 print:py-0 print:gap-8 sm:px-6">
 
         {/* ══════════════════════════════════════════════════════════════════════
             SECTION 01 — CASE SUMMARY
@@ -127,7 +128,7 @@ export function NCIIReportLayout({
             <span className="text-[10px] font-mono text-[#9ca3af] uppercase tracking-[0.28em]">Case Summary</span>
           </div>
 
-          <div className="overflow-hidden rounded-xl border border-[#e8e4de] bg-white print:rounded-none print:border-0 print:border-b print:border-[#e8e4de] print:pb-6">
+          <div className="overflow-hidden rounded-2xl border border-[#e8e4de]/90 bg-white shadow-[0_2px_24px_-12px_rgba(15,23,42,0.08)] print:rounded-none print:border-0 print:border-b print:border-[#e8e4de] print:pb-6 print:shadow-none">
             <div className="px-6 py-6 sm:px-7 sm:py-7">
               <div className="flex flex-wrap items-start justify-between gap-3 mb-6">
                 <div>
@@ -173,7 +174,7 @@ export function NCIIReportLayout({
             SECTION 01b — EVIDENCE RECORDED CONFIRMATION
         ══════════════════════════════════════════════════════════════════════ */}
         <section>
-          <div className="rounded-xl border border-emerald-200 bg-emerald-50 px-6 py-5">
+          <div className="rounded-2xl border border-emerald-200/90 bg-gradient-to-br from-emerald-50 to-teal-50/30 px-6 py-5 shadow-[0_2px_20px_-10px_rgba(5,150,105,0.2)]">
             <div className="flex items-start gap-4">
               <div className="w-9 h-9 rounded-full bg-emerald-100 border border-emerald-200 flex items-center justify-center shrink-0 mt-0.5">
                 <svg width="16" height="16" fill="none" stroke="#059669" strokeWidth="2.5" viewBox="0 0 24 24">
@@ -220,7 +221,7 @@ export function NCIIReportLayout({
             <span className="text-[10px] font-mono text-[#9ca3af] uppercase tracking-[0.28em]">Submitted Evidence</span>
           </div>
 
-          <div className="overflow-hidden rounded-xl border border-[#e8e4de] bg-white print:rounded-none print:border-0 print:border-b print:border-[#e8e4de] print:pb-6">
+          <div className="overflow-hidden rounded-2xl border border-[#e8e4de]/90 bg-white shadow-[0_2px_24px_-12px_rgba(15,23,42,0.06)] print:rounded-none print:border-0 print:border-b print:border-[#e8e4de] print:pb-6 print:shadow-none">
             <div className="px-6 py-6 sm:px-7">
               {suspiciousImg ? (
                 <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:gap-7">
@@ -257,6 +258,8 @@ export function NCIIReportLayout({
             </div>
           </div>
         </section>
+
+        <ReportWellbeingLegal />
 
         {/* ══════════════════════════════════════════════════════════════════════
             SECTION 03 — DISCOVERY FINDINGS
@@ -351,11 +354,12 @@ export function NCIIReportLayout({
         {/* ══════════════════════════════════════════════════════════════════════
             FOOTER
         ══════════════════════════════════════════════════════════════════════ */}
-        <footer className="flex flex-col gap-3 border-t border-[#e8e4de] pt-6 print:border-t-2 print:border-[#0a0a0a] print:pt-4 sm:flex-row sm:items-end sm:justify-between">
+        <footer className="flex flex-col gap-3 border-t border-[#e8e4de] pt-8 print:border-t-2 print:border-[#0a0a0a] print:pt-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="font-mono text-[10px] tracking-[0.22em] text-[#9ca3af] uppercase">Sniffer · Impic Labs · 2026</p>
             <p className="mt-1 max-w-xl text-[11px] leading-relaxed text-[#b3aaa1]">
-              This report is generated automatically as an investigation aid and does not constitute legal advice.
+              This report is generated automatically as an investigation aid. It is not legal advice, not medical advice, and
+              not a substitute for police or a lawyer. The legal reference block is orientation only, not legal advice.
             </p>
           </div>
           <div className="flex gap-4 print:hidden">
