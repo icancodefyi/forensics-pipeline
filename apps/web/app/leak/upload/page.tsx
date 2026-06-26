@@ -28,6 +28,11 @@ function LeakUploadContent() {
   const [scanStep, setScanStep] = useState(0);
   const [processing, setProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [demoMode, setDemoMode] = useState(false);
+
+  useEffect(() => {
+    if (params.get("demo") === "1") setDemoMode(true);
+  }, [params]);
 
   useEffect(() => {
     if (!caseId) router.replace("/leak");
@@ -100,6 +105,9 @@ function LeakUploadContent() {
       formData.append("suspicious_image", file);
       if (evidenceFile) {
         formData.append("evidence_image", evidenceFile);
+      }
+      if (demoMode) {
+        formData.append("demo", "true");
       }
 
       const [res] = await Promise.all([
@@ -223,6 +231,47 @@ function LeakUploadContent() {
           We&apos;ll generate a perceptual fingerprint and scan across monitored domains for visual matches. 
           No original image needed — this works on any copy of the content.
         </p>
+
+        {demoMode && (
+          <div className="mb-8 rounded-xl border border-emerald-200 bg-emerald-50 p-5">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+              <span className="font-mono text-[10px] text-emerald-700 uppercase tracking-widest">Demo Mode</span>
+            </div>
+            <p className="text-[12.5px] text-emerald-800 mb-4 leading-relaxed">
+              Try our 3-tier matching engine with these pre-loaded variants. Each demonstrates a different detection capability.
+            </p>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              {[
+                { file: "/demo/demo_original.jpg", label: "Original", desc: "pHash exact match (99%)" },
+                { file: "/demo/demo_cropped.jpg", label: "Cropped", desc: "ORB structural match (95%)" },
+                { file: "/demo/demo_watermarked.jpg", label: "Watermarked", desc: "ORB + Histogram (87%)" },
+                { file: "/demo/demo_darker.jpg", label: "Exposure Edit", desc: "Histogram correlation (82%)" },
+              ].map((item) => (
+                <button
+                  key={item.file}
+                  type="button"
+                  onClick={async () => {
+                    const resp = await fetch(item.file);
+                    const blob = await resp.blob();
+                    const f = new File([blob], item.file.split("/").pop() || "demo.jpg", { type: "image/jpeg" });
+                    setFile(f);
+                    setPreview(URL.createObjectURL(blob));
+                    setError(null);
+                  }}
+                  className="group relative aspect-[16/9] rounded-lg overflow-hidden border border-emerald-200 bg-white hover:border-emerald-400 hover:shadow-md transition-all"
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={item.file} alt={item.label} className="w-full h-full object-cover" />
+                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-2">
+                    <p className="text-[11px] font-medium text-white">{item.label}</p>
+                    <p className="text-[9px] text-white/70">{item.desc}</p>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
 
         <DropZone
           file={file}

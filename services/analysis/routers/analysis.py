@@ -95,6 +95,7 @@ async def start_discovery(
     case_id: str,
     suspicious_image: UploadFile = File(...),
     origin_domain: Optional[str] = Form(None),
+    demo: bool = Form(False),
 ):
     if suspicious_image.content_type not in ALLOWED_MIME_TYPES:
         raise HTTPException(
@@ -130,6 +131,10 @@ async def start_discovery(
 
     def worker() -> None:
         try:
+            from engine.discovery import DEMO_DISCOVERY_MODE
+            if demo:
+                import engine.discovery as d
+                d.DEMO_DISCOVERY_MODE = True
             result = run_discovery_scan(
                 case_id=case_id,
                 suspicious_bytes=suspicious_bytes,

@@ -114,11 +114,14 @@ class DiscoveryMatch(BaseModel):
     image_url: str
     asset_type: str
     confidence: float
-    match_type: str  # exact | near_duplicate | probable
+    match_type: str  # exact | near_duplicate | structural | probable
     phash_distance: int
     dhash_distance: int
     ahash_distance: int
     ssim_score: float
+    keypoint_matches: int = 0
+    keypoint_match_rate: float = 0.0
+    hist_correlation: float = 0.0
 
 
 class DiscoveryRelatedDomain(BaseModel):

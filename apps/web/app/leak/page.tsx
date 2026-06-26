@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
@@ -16,8 +16,9 @@ const SOURCES = [
   { value: "Other website", label: "Other website", desc: "Any other platform or URL" },
 ];
 
-export default function LeakPage() {
+function LeakPageContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [source, setSource] = useState("Telegram");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -55,7 +56,7 @@ export default function LeakPage() {
         }),
         keepalive: true,
       }).catch(() => {});
-      router.push(`/leak/upload?caseId=${json.case_id}`);
+      router.push(`/leak/upload?caseId=${json.case_id}${searchParams.get("demo") === "1" ? "&demo=1" : ""}`);
     } catch (e) {
       setError(e instanceof Error ? e.message : "An error occurred. Please try again.");
       setLoading(false);
@@ -132,6 +133,40 @@ export default function LeakPage() {
           )}
 
           <div className="flex items-center justify-between pt-2">
+            {searchParams.get("demo") === "1" && (
+              <Link
+                href="/leak/upload?demo=1"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setLoading(true);
+                  setError(null);
+                  fetch(`${API_URL}/api/cases/`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                      anonymous: true,
+                      platform_source: "mydesi.ltd",
+                      issue_type: "Non-consensual image sharing",
+                      pipeline_type: "ncii",
+                    }),
+                  })
+                    .then((r) => r.json() as Promise<{ case_id: string }>)
+                    .then((json) => {
+                      router.push(`/leak/upload?caseId=${json.case_id}&demo=1`);
+                    })
+                    .catch(() => {
+                      setError("Demo setup failed. Try selecting a source above.");
+                      setLoading(false);
+                    });
+                }}
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-full border-2 border-emerald-400 bg-emerald-50 text-emerald-800 text-[13px] font-medium hover:bg-emerald-100 transition-colors"
+              >
+                <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                  <polygon points="5 3 19 12 5 21 5 3" />
+                </svg>
+                {loading ? "Starting…" : "Quick Demo"}
+              </Link>
+            )}
             <Link href="/start" className="text-[13px] text-[#6b7280] hover:text-[#0a0a0a] transition-colors">
               ← Back
             </Link>
@@ -153,5 +188,13 @@ export default function LeakPage() {
         </form>
       </main>
     </div>
+  );
+}
+
+export default function LeakPage() {
+  return (
+    <Suspense>
+      <LeakPageContent />
+    </Suspense>
   );
 }
