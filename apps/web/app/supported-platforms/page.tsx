@@ -108,7 +108,7 @@ export default async function SupportedPlatformsPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      <header className="border-b border-[#f0ede8] px-4 sm:px-6 lg:px-8 py-4 flex items-center gap-3">
+      <header className="border-b border-[#e8e4de] px-4 sm:px-6 lg:px-8 py-4 flex items-center gap-3">
         <Link
           href="/"
           className="font-mono text-[13px] text-[#0a0a0a] tracking-widest uppercase hover:opacity-70 transition-opacity"
@@ -118,7 +118,7 @@ export default async function SupportedPlatformsPage() {
         <span className="text-[#d4cfc9]">/</span>
         <span className="text-[13px] text-[#9ca3af]">Supported Platforms</span>
         <Link
-          href="/start"
+          href="/leak"
           className="ml-auto text-[12px] font-medium bg-[#0a0a0a] text-white px-4 py-1.5 rounded-full hover:bg-[#1a1a1a] transition-colors"
         >
           Start Investigation
@@ -130,10 +130,7 @@ export default async function SupportedPlatformsPage() {
           <p className="font-mono text-[11px] text-rose-500 uppercase tracking-widest mb-3">
             Takedown Coverage
           </p>
-          <h1
-            className="text-4xl text-[#0a0a0a] leading-snug mb-3"
-            style={{ fontFamily: "Georgia,'Times New Roman',serif", fontWeight: 400 }}
-          >
+          <h1 className="font-serif text-4xl text-[#0a0a0a] leading-snug mb-3 font-normal">
             Supported Platforms
           </h1>
           <p className="text-[14px] text-[#6b7280] max-w-3xl leading-relaxed">

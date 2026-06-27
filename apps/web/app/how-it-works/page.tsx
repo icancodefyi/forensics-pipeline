@@ -257,7 +257,7 @@ export default function HowItWorksPage() {
                 ))}
               </div>
               <Link
-                href="/start"
+                href="/leak"
                 className="w-full text-center py-3 rounded-full bg-[#0a0a0a] text-white text-[13px] font-medium hover:bg-[#1a1a1a] transition-colors"
               >
                 Start Investigation →
@@ -377,7 +377,7 @@ export default function HowItWorksPage() {
                 </div>
 
                 {/* Tech + flags */}
-                <div className="mt-auto pt-4 border-t border-[#f0ede8] space-y-2">
+                <div className="mt-auto pt-4 border-t border-[#e8e4de] space-y-2">
                   <div className="flex items-start gap-2">
                     <span className="font-mono text-[9.5px] uppercase text-[#c4bdb5] tracking-wide shrink-0 pt-px">Tech</span>
                     <span className="font-mono text-[10.5px] text-[#9ca3af]">{layer.tech}</span>
@@ -483,7 +483,7 @@ export default function HowItWorksPage() {
               </div>
               <div className="mt-8">
                 <Link
-                  href="/protect"
+                  href="/leak"
                   className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#0a0a0a] text-white text-[13px] font-medium hover:bg-[#1a1a1a] transition-colors"
                 >
                   Register an Image →
@@ -519,7 +519,7 @@ export default function HowItWorksPage() {
                     This image was submitted for verification on 6 Mar 2026 and automatically matched your registration.
                   </p>
                 </div>
-                <div className="pt-1 border-t border-[#f0ede8]">
+                <div className="pt-1 border-t border-[#e8e4de]">
                   <p className="font-mono text-[10px] text-[#a8a29e]">Registered pre-dispute · ownership chain established</p>
                 </div>
               </div>
@@ -618,7 +618,7 @@ export default function HowItWorksPage() {
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link
-              href="/start"
+              href="/leak"
               className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-white text-[#0a0a0a] text-[14px] font-semibold hover:opacity-85 transition-opacity"
             >
               Start an Investigation

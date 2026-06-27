@@ -150,7 +150,7 @@ export function MonitoringPrototypeCard() {
                 </thead>
                 <tbody>
                   {(data.sweepHistory ?? []).map((row) => (
-                    <tr key={row.at} className="border-b border-[#f0ede8] last:border-0 text-[#374151]">
+                    <tr key={row.at} className="border-b border-[#e8e4de] last:border-0 text-[#374151]">
                       <td className="py-2 px-3 whitespace-nowrap">{formatShort(row.at)}</td>
                       <td className="py-2 px-2 tabular-nums">{row.domainsChecked}</td>
                       <td className="py-2 px-2 tabular-nums">{row.thumbnailsHashed}</td>

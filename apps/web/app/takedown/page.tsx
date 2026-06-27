@@ -729,7 +729,7 @@ function TakedownPageInner() {
               Back to Investigate
             </Link>
           )}
-          <Link href="/start" className="text-[12px] font-medium bg-[#0a0a0a] text-white px-4 py-1.5 rounded-full hover:bg-[#1a1a1a] transition-colors">
+          <Link href="/leak" className="text-[12px] font-medium bg-[#0a0a0a] text-white px-4 py-1.5 rounded-full hover:bg-[#1a1a1a] transition-colors">
             New Investigation
           </Link>
         </div>

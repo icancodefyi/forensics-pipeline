@@ -24,7 +24,7 @@ export function CTASection() {
 
         <div className="flex flex-wrap items-center justify-center gap-4">
           <Link
-            href="/start"
+            href="/leak?demo=1"
             className="inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-[14px] font-semibold text-[#0a0a0a] transition-opacity hover:opacity-85"
           >
             Start an Investigation
@@ -33,7 +33,7 @@ export function CTASection() {
             </svg>
           </Link>
           <Link
-            href="/protect"
+            href="/leak?demo=1"
             className="rounded-full border border-[#2a2a2a] px-7 py-3.5 text-[14px] font-medium text-[#9ca3af] transition-colors hover:border-[#4b4742] hover:text-white"
           >
             Protect Your Images

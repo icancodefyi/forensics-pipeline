@@ -59,7 +59,7 @@ export function SyntheticBreakdown() {
         </div>
       </div>
 
-      <div className="mt-4 pt-3 border-t border-[#f0ede8]">
+      <div className="mt-4 pt-3 border-t border-[#e8e4de]">
         <p className="text-[10px] font-mono text-[#a8a29e]">
           Classified via FFT · PRNU · C2PA manifest scoring
         </p>

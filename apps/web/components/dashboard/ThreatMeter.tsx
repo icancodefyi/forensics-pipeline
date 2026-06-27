@@ -117,13 +117,13 @@ export function ThreatMeter({
         </div>
       </div>
 
-      <div className="grid grid-cols-3 mt-5 pt-4 border-t border-[#f0ede8]">
+      <div className="grid grid-cols-3 mt-5 pt-4 border-t border-[#e8e4de]">
         {[
           { label: "AI Detections", value: String(aiDetections) },
           { label: "Tamper Signals", value: String(tamperSignals) },
           { label: "Registry Hits", value: String(registryHits) },
         ].map((s, i) => (
-          <div key={s.label} className={`text-center py-1 ${i < 2 ? "border-r border-[#f0ede8]" : ""}`}>
+          <div key={s.label} className={`text-center py-1 ${i < 2 ? "border-r border-[#e8e4de]" : ""}`}>
             <p className="text-[19px] font-semibold text-[#0a0a0a] font-mono tabular-nums">{s.value}</p>
             <p className="text-[9.5px] text-[#9ca3af] mt-0.5 uppercase tracking-wide leading-snug">{s.label}</p>
           </div>

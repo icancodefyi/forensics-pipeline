@@ -235,7 +235,7 @@ export function LeakActionConsole({ caseId }: Props): JSX.Element {
       </div>
 
       {/* ── Description ── */}
-      <div className="px-6 py-4 border-b border-[#f0ede8]">
+      <div className="px-6 py-4 border-b border-[#e8e4de]">
         <p className="text-[13px] font-semibold text-[#0a0a0a] mb-0.5">Actionable investigation targets</p>
         <p className="text-[12px] text-[#6b7280] leading-relaxed">
           Investigate the infrastructure or issue a takedown notice directly from the case report.
@@ -313,7 +313,7 @@ export function LeakActionConsole({ caseId }: Props): JSX.Element {
                     </div>
 
                     {/* Card actions */}
-                    <div className="flex flex-wrap gap-2 pt-2 border-t border-[#f0ede8]">
+                    <div className="flex flex-wrap gap-2 pt-2 border-t border-[#e8e4de]">
                       <button
                         type="button"
                         onClick={(e) => { e.stopPropagation(); setSelectedDomain(item.domain); mark(item.domain, "investigated"); }}
@@ -339,7 +339,7 @@ export function LeakActionConsole({ caseId }: Props): JSX.Element {
             {/* ── Investigation Workspace ── */}
             {activeDomain && (
               <div className="rounded-xl border border-[#e8e4de] bg-white overflow-hidden">
-                <div className="border-b border-[#f0ede8] px-5 py-4 flex items-center justify-between gap-3 bg-[#fafaf8]">
+                <div className="border-b border-[#e8e4de] px-5 py-4 flex items-center justify-between gap-3 bg-[#fafaf8]">
                   <div>
                     <p className="text-[10px] font-mono uppercase tracking-widest text-[#9ca3af] mb-1">Investigation Workspace</p>
                     <div className="flex items-center gap-2">
@@ -528,7 +528,7 @@ export function LeakActionConsole({ caseId }: Props): JSX.Element {
 
                   {/* Generated notice */}
                   <div className="rounded-xl border border-[#e8e4de] overflow-hidden">
-                    <div className="flex items-center justify-between px-4 py-3 border-b border-[#f0ede8] bg-[#fafaf8]">
+                    <div className="flex items-center justify-between px-4 py-3 border-b border-[#e8e4de] bg-[#fafaf8]">
                       <p className="text-[10px] font-mono uppercase tracking-widest text-[#9ca3af]">Ready Notice</p>
                       <button
                         type="button"
@@ -553,7 +553,7 @@ export function LeakActionConsole({ caseId }: Props): JSX.Element {
                 </div>
 
                 {/* Dialog footer */}
-                <div className="flex items-center justify-between gap-3 border-t border-[#f0ede8] bg-[#fafaf8] px-5 py-3.5">
+                <div className="flex items-center justify-between gap-3 border-t border-[#e8e4de] bg-[#fafaf8] px-5 py-3.5">
                   <AlertDialogCancel className="rounded-lg border border-[#e8e4de] bg-white px-4 py-2 text-[12px] font-medium text-[#374151] hover:border-[#0a0a0a] transition-colors">
                     Close
                   </AlertDialogCancel>

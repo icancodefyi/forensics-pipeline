@@ -58,7 +58,7 @@ export default function NotFound() {
             </div>
 
             {/* Analysis summary */}
-            <div className="rounded-lg border border-[#f0ede8] bg-[#fafaf8] px-4 py-3 mb-6 text-left">
+            <div className="rounded-lg border border-[#e8e4de] bg-[#fafaf8] px-4 py-3 mb-6 text-left">
               <p className="font-mono text-[9.5px] uppercase tracking-widest text-[#a8a29e] mb-2">Analysis Summary</p>
               <p className="text-[12.5px] text-[#6b7280] leading-relaxed">
                 The requested URL could not be located in the routing manifest.
@@ -111,7 +111,7 @@ export default function NotFound() {
             ← Return to Home
           </Link>
           <Link
-            href="/start"
+            href="/leak"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-[#e8e4de] bg-white text-[13px] font-medium text-[#374151] hover:border-[#0a0a0a] transition-colors"
           >
             Start Investigation

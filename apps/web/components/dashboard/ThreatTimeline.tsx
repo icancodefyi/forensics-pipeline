@@ -113,7 +113,7 @@ export function ThreatTimeline() {
         )}
       </div>
 
-      <div className="mt-3 pt-3 border-t border-[#f0ede8] flex items-center gap-4">
+      <div className="mt-3 pt-3 border-t border-[#e8e4de] flex items-center gap-4">
         {(["high", "medium", "low"] as Severity[]).map((sev) => (
           <div key={sev} className="flex items-center gap-1.5">
             <div className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: SEV_COLOR[sev] }} />

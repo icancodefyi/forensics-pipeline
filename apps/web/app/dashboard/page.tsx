@@ -221,7 +221,7 @@ export default function DashboardPage() {
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
               {(overview?.breakdown.lifecycle ?? []).map((item) => (
-                <div key={item.name} className="rounded-lg border border-[#f0ede8] bg-[#fcfcfb] px-3 py-3">
+                <div key={item.name} className="rounded-lg border border-[#e8e4de] bg-[#fcfcfb] px-3 py-3">
                   <p className="text-[9px] font-mono uppercase tracking-widest text-[#a8a29e] leading-tight">{item.name}</p>
                   <p className="text-[20px] font-semibold text-[#111827] mt-1.5 tabular-nums">{item.count}</p>
                 </div>
@@ -235,7 +235,7 @@ export default function DashboardPage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 sm:gap-5 mt-4 sm:mt-5">
           <section className="lg:col-span-3 rounded-xl border border-[#e8e4de] bg-white p-5">
-            <div className="mb-4 rounded-lg border border-[#f0ede8] bg-[#fcfcfb] px-3 py-2.5">
+            <div className="mb-4 rounded-lg border border-[#e8e4de] bg-[#fcfcfb] px-3 py-2.5">
               <p className="text-[11px] text-[#6b7280] leading-relaxed">
                 Status is informational. Removal and escalation rows reflect lifecycle events in your database when present.
               </p>
@@ -252,7 +252,7 @@ export default function DashboardPage() {
             <div className="overflow-x-auto">
               <table className="w-full min-w-155">
                 <thead>
-                  <tr className="text-left border-b border-[#f0ede8]">
+                  <tr className="text-left border-b border-[#e8e4de]">
                     <th className="py-2 text-[10px] font-mono uppercase tracking-widest text-[#b0a89e]">Case</th>
                     <th className="py-2 text-[10px] font-mono uppercase tracking-widest text-[#b0a89e]">Declared</th>
                     <th className="py-2 text-[10px] font-mono uppercase tracking-widest text-[#b0a89e]">Lifecycle</th>
@@ -312,7 +312,7 @@ export default function DashboardPage() {
               {(overview?.recentEvents ?? []).map((event, idx) => (
                 <div
                   key={`${event.caseId}-${event.createdAt}-${idx}`}
-                  className="border border-[#f0ede8] rounded-lg p-2.5 bg-[#fcfcfb]"
+                  className="border border-[#e8e4de] rounded-lg p-2.5 bg-[#fcfcfb]"
                 >
                   <div className="flex items-center justify-between gap-2">
                     <span className="text-[11px] font-medium text-[#374151]">{eventLabel(event.eventType)}</span>

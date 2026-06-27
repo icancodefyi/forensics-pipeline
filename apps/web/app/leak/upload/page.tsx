@@ -221,10 +221,7 @@ function LeakUploadContent() {
           <span className="font-mono text-[10px] text-rose-600 uppercase tracking-widest">Pipeline 2 · NCII Leak Discovery</span>
         </div>
 
-        <h1
-          className="text-3xl text-[#0a0a0a] leading-snug mb-2"
-          style={{ fontFamily: "Georgia,'Times New Roman',serif", fontWeight: 400 }}
-        >
+        <h1 className="font-serif text-3xl text-[#0a0a0a] leading-snug mb-2 font-normal">
           Upload the image to trace
         </h1>
         <p className="text-sm text-[#6b7280] mb-8 max-w-prose">

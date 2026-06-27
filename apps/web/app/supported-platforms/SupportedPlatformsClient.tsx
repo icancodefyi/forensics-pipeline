@@ -29,7 +29,7 @@ function PlatformGrid({ platforms }: { platforms: PlatformCard[] }) {
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
       {platforms.map((platform) => (
         <article key={platform.domain} className="rounded-xl border border-[#e8e4de] bg-white px-4 py-4 hover:border-[#c4bdb5] transition-colors">
-          <div className="w-12 h-12 rounded-xl border border-[#f0ede8] bg-[#fafaf8] flex items-center justify-center overflow-hidden mb-3">
+          <div className="w-12 h-12 rounded-xl border border-[#e8e4de] bg-[#fafaf8] flex items-center justify-center overflow-hidden mb-3">
             {platform.logoFile ? (
               <Image
                 src={`/supported-platforms/${platform.logoFile}`}

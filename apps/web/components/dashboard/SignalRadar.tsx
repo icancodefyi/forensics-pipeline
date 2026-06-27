@@ -105,7 +105,7 @@ export function SignalRadar() {
       </div>
 
       {/* Signal legend with values */}
-      <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 pt-3 border-t border-[#f0ede8]">
+      <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 pt-3 border-t border-[#e8e4de]">
         {SIGNALS.map((s) => (
           <div key={s.name} className="flex items-center justify-between gap-2">
             <div className="flex items-center gap-1.5 min-w-0">

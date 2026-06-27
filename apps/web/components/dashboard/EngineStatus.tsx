@@ -67,7 +67,7 @@ export function EngineStatus() {
         ))}
       </div>
 
-      <div className="mt-3 pt-3 border-t border-[#f0ede8] flex items-center justify-between">
+      <div className="mt-3 pt-3 border-t border-[#e8e4de] flex items-center justify-between">
         <p className="text-[10px] font-mono text-[#a8a29e]">Polled every 30s</p>
         <p className="text-[10px] font-mono text-emerald-600">Uptime 99.98%</p>
       </div>

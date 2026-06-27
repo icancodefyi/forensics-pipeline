@@ -58,7 +58,7 @@ export function PlatformDistribution({ items, totalLabel }: PlatformDistribution
         ))}
       </div>
 
-      <div className="mt-4 pt-3 border-t border-[#f0ede8] flex items-center justify-between">
+      <div className="mt-4 pt-3 border-t border-[#e8e4de] flex items-center justify-between">
         <p className="text-[10px] font-mono text-[#a8a29e]">{totalLabel ?? "412 total cases analysed"}</p>
         <p className="text-[10px] font-mono text-[#c4bdb5]">Based on platform field</p>
       </div>

@@ -195,7 +195,7 @@ function InvestigateContent() {
             Takedown Notice
           </Link>
           <Link
-            href="/start"
+            href="/leak"
             className="text-[12px] font-medium bg-[#0a0a0a] text-white px-4 py-1.5 rounded-full hover:bg-[#1a1a1a] transition-colors"
           >
             New Investigation

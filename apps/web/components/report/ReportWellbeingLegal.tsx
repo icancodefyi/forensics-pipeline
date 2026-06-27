@@ -56,7 +56,7 @@ export function ReportWellbeingLegal() {
         </div>
 
         {/* Title band */}
-        <div className="px-6 py-4 border-b border-[#f0ede8]">
+        <div className="px-6 py-4 border-b border-[#e8e4de]">
           <p className="text-[13px] font-semibold text-[#0a0a0a] mb-0.5">Laws & remedies that may apply</p>
           <p className="text-[12px] text-[#6b7280] leading-relaxed">
             High-level orientation for India. Use this section with police, legal aid, or platform abuse teams — not a substitute for professional legal advice.

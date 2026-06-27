@@ -65,13 +65,13 @@ function LeakPageContent() {
 
   return (
     <div className="min-h-screen bg-white">
-      <header className="border-b border-[#f0ede8] px-6 py-4 flex items-center gap-3">
+      <header className="border-b border-[#e8e4de] px-6 py-4 flex items-center gap-3">
         <Link href="/" className="font-mono text-[13px] text-[#0a0a0a] tracking-widest uppercase hover:opacity-70 transition-opacity">
           Sniffer
         </Link>
         <span className="text-[#d4cfc9]">/</span>
-        <Link href="/start" className="text-[13px] text-[#9ca3af] hover:text-[#0a0a0a] transition-colors">
-          Start
+        <Link href="/how-it-works" className="text-[13px] text-[#9ca3af] hover:text-[#0a0a0a] transition-colors">
+          How it works
         </Link>
         <span className="text-[#d4cfc9]">/</span>
         <span className="text-[13px] text-[#9ca3af]">Leak Discovery</span>
@@ -83,10 +83,7 @@ function LeakPageContent() {
           <span className="font-mono text-[10px] text-rose-600 uppercase tracking-widest">NCII · Leak Discovery</span>
         </div>
 
-        <h1
-          className="text-3xl text-[#0a0a0a] leading-snug mt-4 mb-2"
-          style={{ fontFamily: "Georgia,'Times New Roman',serif", fontWeight: 400 }}
-        >
+        <h1 className="font-serif text-3xl text-[#0a0a0a] leading-snug mt-4 mb-2 font-normal">
           Where was the content found?
         </h1>
         <p className="text-[14px] text-[#6b7280] mb-8">
@@ -167,7 +164,7 @@ function LeakPageContent() {
                 {loading ? "Starting…" : "Quick Demo"}
               </Link>
             )}
-            <Link href="/start" className="text-[13px] text-[#6b7280] hover:text-[#0a0a0a] transition-colors">
+            <Link href="/" className="text-[13px] text-[#6b7280] hover:text-[#0a0a0a] transition-colors">
               ← Back
             </Link>
             <button
