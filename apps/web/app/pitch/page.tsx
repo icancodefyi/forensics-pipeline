@@ -413,63 +413,12 @@ export default function PitchPage() {
             <div className="border-b border-[#e8e4de] px-6 py-4 bg-[#fafaf8]">
               <p className="font-mono text-[9px] uppercase tracking-widest text-[#a8a29e]">System Architecture</p>
             </div>
-            <div className="p-6 sm:p-8">
-              <div className="flex flex-col items-center gap-4">
-                <div className="w-full max-w-[200px] rounded-xl border-2 border-[#0a0a0a] bg-white px-6 py-4 text-center">
-                  <p className="text-[11px] font-mono text-[#6b7280] uppercase tracking-widest">Client</p>
-                  <p className="text-[10px] text-[#9ca3af] mt-0.5">Next.js · Browser</p>
-                </div>
-                <svg width="16" height="20" viewBox="0 0 16 20" fill="none">
-                  <line x1="8" y1="0" x2="8" y2="16" stroke="#d4cfc9" strokeWidth="1.5" />
-                  <path d="M2 12l6 6 6-6" stroke="#d4cfc9" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-                <div className="w-full max-w-[280px] rounded-xl border-2 border-indigo-400 bg-indigo-50 px-6 py-4 text-center">
-                  <p className="text-[11px] font-mono text-indigo-600 uppercase tracking-widest">Caddy Reverse Proxy</p>
-                  <p className="text-[10px] text-indigo-400 mt-0.5">TLS termination · Path-based routing</p>
-                </div>
-                <div className="w-full max-w-[400px] flex items-center justify-between px-4">
-                  <div className="flex flex-col items-center">
-                    <svg width="16" height="20" viewBox="0 0 16 20" fill="none">
-                      <line x1="8" y1="0" x2="8" y2="16" stroke="#d4cfc9" strokeWidth="1.5" />
-                      <path d="M2 12l6 6 6-6" stroke="#d4cfc9" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                    <span className="font-mono text-[8px] text-[#9ca3af] mt-1">/api/*</span>
-                  </div>
-                  <div className="flex flex-col items-center">
-                    <svg width="16" height="20" viewBox="0 0 16 20" fill="none">
-                      <line x1="8" y1="0" x2="8" y2="16" stroke="#d4cfc9" strokeWidth="1.5" />
-                      <path d="M2 12l6 6 6-6" stroke="#d4cfc9" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                    <span className="font-mono text-[8px] text-[#9ca3af] mt-1">/*</span>
-                  </div>
-                </div>
-                <div className="w-full max-w-[400px] flex items-center gap-6">
-                  <div className="flex-1 rounded-xl border-2 border-emerald-400 bg-emerald-50 px-5 py-4 text-center">
-                    <p className="text-[11px] font-mono text-emerald-700 uppercase tracking-widest">FastAPI Backend</p>
-                    <p className="text-[9px] text-emerald-600 mt-1">Port 8000 · Python · Uvicorn</p>
-                    <div className="mt-2 flex items-center justify-center gap-2">
-                      <span className="rounded bg-emerald-100 px-1.5 py-0.5 font-mono text-[8px] text-emerald-700">pHash</span>
-                      <span className="rounded bg-emerald-100 px-1.5 py-0.5 font-mono text-[8px] text-emerald-700">ORB</span>
-                      <span className="rounded bg-emerald-100 px-1.5 py-0.5 font-mono text-[8px] text-emerald-700">HSV</span>
-                    </div>
-                    <p className="text-[9px] text-emerald-600 mt-1.5">Dataset: 91 domains · 16 networks</p>
-                  </div>
-                  <div className="flex-1 rounded-xl border-2 border-amber-400 bg-amber-50 px-5 py-4 text-center">
-                    <p className="text-[11px] font-mono text-amber-700 uppercase tracking-widest">Next.js Frontend</p>
-                    <p className="text-[9px] text-amber-600 mt-1">Port 3001 · SSR</p>
-                    <p className="text-[9px] text-amber-600 mt-1">Tailwind · Framer Motion</p>
-                  </div>
-                </div>
-                <svg width="16" height="20" viewBox="0 0 16 20" fill="none">
-                  <line x1="8" y1="0" x2="8" y2="16" stroke="#d4cfc9" strokeWidth="1.5" />
-                  <path d="M2 12l6 6 6-6" stroke="#d4cfc9" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-                <div className="w-full max-w-[200px] rounded-xl border-2 border-blue-400 bg-blue-50 px-6 py-4 text-center">
-                  <p className="text-[11px] font-mono text-blue-700 uppercase tracking-widest">MongoDB Atlas</p>
-                  <p className="text-[9px] text-blue-600 mt-1">Case data · User accounts</p>
-                </div>
-              </div>
-            </div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/sniffer-arch.png"
+              alt="Sniffer system architecture diagram showing client, Caddy proxy, Next.js frontend, FastAPI backend with 3-tier pipeline, and MongoDB Atlas"
+              className="w-full h-auto"
+            />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
