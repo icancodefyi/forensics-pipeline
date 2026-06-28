@@ -21,7 +21,7 @@ type NavKey =
 
 const NAV_HREFS: NavItem[] = [
   { id: "how-it-works", key: "howItWorks", href: "/how-it-works" },
-  { id: "pricing", key: "pricing", href: "/pricing", label: "Pricing" },
+  { id: "pitch", key: "pricing", href: "/pitch", label: "Pitch" },
   { id: "resources", key: "resources", href: "/resources" },
   { id: "supported-platforms", key: "supportedPlatforms", href: "/supported-platforms", label: "Platforms" },
 ];
