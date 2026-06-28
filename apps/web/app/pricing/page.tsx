@@ -85,7 +85,7 @@ const COMPARISONS = [
     competitor: "TMG (Takedown Management Group)",
     model: "Service fee per case",
     price: "$499 / case",
-   扫描: "No scanning — manual investigation",
+    scan: "No scanning — manual investigation",
     takedown: "DMCA only",
     india: "No India presence",
     us: "Scan + takedown in one flow",
@@ -94,7 +94,7 @@ const COMPARISONS = [
     competitor: "StopNCII.org (UK Government, Meta)",
     model: "Free, government-funded",
     price: "₹0",
-    扫描: "Hash submission to Meta only",
+    scan: "Hash submission to Meta only",
     takedown: "Meta platforms only",
     india: "Not available in India",
     us: "91 domains across 16 networks, India-first",
@@ -103,7 +103,7 @@ const COMPARISONS = [
     competitor: "Manual lawyer / paralegal",
     model: "Hourly billing",
     price: "₹5,000 – 15,000 / case",
-    扫描: "Manually searching Google",
+    scan: "Manually searching Google",
     takedown: "Draft notices by hand",
     india: "Available but slow",
     us: "Automated, instant, 99% cheaper",
@@ -319,7 +319,7 @@ export default function PricingPage() {
                     <td className="px-6 py-4 text-[12.5px] font-semibold text-[#0a0a0a]">{row.competitor}</td>
                     <td className="px-6 py-4 text-[12px] text-[#6b7280]">{row.model}</td>
                     <td className="px-6 py-4 text-[12px] text-[#6b7280] font-mono">{row.price}</td>
-                    <td className="px-6 py-4 text-[12px] text-[#6b7280]">{row.扫描}</td>
+                    <td className="px-6 py-4 text-[12px] text-[#6b7280]">{row.scan}</td>
                     <td className="px-6 py-4 text-[12px] text-[#6b7280]">{row.takedown}</td>
                     <td className="px-6 py-4 text-[12px] text-[#6b7280]">{row.india}</td>
                     <td className="px-6 py-4 text-[12px] font-medium text-emerald-700">{row.us}</td>
