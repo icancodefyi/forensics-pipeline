@@ -16,10 +16,12 @@ type NavKey =
   | "howItWorks"
   | "resources"
   | "dashboard"
-  | "supportedPlatforms";
+  | "supportedPlatforms"
+  | "pricing";
 
 const NAV_HREFS: NavItem[] = [
   { id: "how-it-works", key: "howItWorks", href: "/how-it-works" },
+  { id: "pricing", key: "pricing", href: "/pricing", label: "Pricing" },
   { id: "resources", key: "resources", href: "/resources" },
   { id: "supported-platforms", key: "supportedPlatforms", href: "/supported-platforms", label: "Platforms" },
 ];

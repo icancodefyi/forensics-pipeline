@@ -16,9 +16,8 @@ const NAV = [
   {
     group: "Use Cases",
     links: [
-      { label: "Deepfake verification", href: "/start" },
       { label: "NCII leak discovery", href: "/leak" },
-      { label: "Image protection", href: "/protect" },
+      { label: "Pricing", href: "/pricing" },
       { label: "Supported platforms", href: "/supported-platforms" },
     ],
   },
