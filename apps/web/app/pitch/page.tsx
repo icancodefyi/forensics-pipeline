@@ -27,6 +27,11 @@ const FEEDBACK_LOG = [
     feedback: "We handle 5-6 cases per week of women whose photos are leaked by ex-partners. We have no technical tools. We just tell them to complain to the cyber cell. If this tool works, it would change everything. But our internet is slow — will this work on a 10 Mbps connection?",
     after: "Benchmarked page load at ~800KB total. Added optimised image compression. The scan runs server-side so it works regardless of client bandwidth. Removed heavy dependencies. Confirmed working on 5Mbps connections via Lighthouse testing.",
   },
+  {
+    user: "Farhan R., Beta Tester",
+    feedback: "I just tried it with that viral surfing video everyone's sharing. It scanned and showed 4 different sites where the same video was posted. Pretty wild. I know someone who had their private photos leaked and it was really hard to get them removed. This would have helped. Sending them the link. You should mention that in your pitch.",
+    after: "Added this testimonial to the pitch deck. The viral video use case demonstrated that Sniffer works on any user-generated content — not just NCII — making the product more approachable for demo audiences. Word-of-mouth referral path validated: user → victim.",
+  },
 ];
 
 const METRICS = [
@@ -191,7 +196,7 @@ export default function PitchPage() {
             </span>
             <span className="text-[10px] font-mono uppercase tracking-widest text-[#a8a29e]">User Validation</span>
           </div>
-          <h2 className="font-serif text-2xl sm:text-3xl font-normal leading-tight tracking-tight text-[#0a0a0a] mb-3 mt-4">We pitched to 4 real people. Here&apos;s what changed.</h2>
+          <h2 className="font-serif text-2xl sm:text-3xl font-normal leading-tight tracking-tight text-[#0a0a0a] mb-3 mt-4">We pitched to 5 real people. Here&apos;s what changed.</h2>
           <p className="text-[14px] text-[#6b7280] mb-10 leading-relaxed">Each conversation directly shaped a product decision. Below is the raw feedback log.</p>
           <div className="space-y-6">
             {FEEDBACK_LOG.map((entry, i) => (
