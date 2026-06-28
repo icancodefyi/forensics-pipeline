@@ -8,26 +8,6 @@ export const metadata = {
 
 const FEEDBACK_LOG = [
   {
-    user: "Aanya S., 22, College Student, Delhi",
-    feedback: "I didn't know something like this existed. If someone leaks my photo, I wouldn't know where to start. But I'm scared that uploading my image means giving it to another server. What if my image leaks from your side?",
-    after: "Added an 'Evidence Recorded' confirmation banner at the top of every report that explicitly says 'No personally identifiable information is stored. Image was never retained server-side.' Also added a privacy callout on the upload page explaining hash-first architecture.",
-  },
-  {
-    user: "Priya M., 34, Paralegal, Mumbai",
-    feedback: "I handle NCII cases for a law firm. Right now I manually search Google for copies of my client's images. It takes 3-4 hours per case. Your scan found matches on 3 domains in 30 seconds — that's insane. But I need downloadable reports I can file in court, not just a web page.",
-    after: "Added 'Download PDF' and 'Print' buttons to the report header. The print layout is already formatted for filing. Added a 'Save report' flow with email magic link so lawyers can access reports on any device.",
-  },
-  {
-    user: "Rahul K., 28, Software Engineer, Bangalore",
-    feedback: "The scan result UI is clean but I didn't understand what 'pHash Δ 2' means. You need plain language for non-technical users. Also the evidence upload is confusing — I thought I had to upload the leaked image AND proof of where I found it. Make it clearer.",
-    after: "Added plain-language match labels: 'Exact visual match', 'Near-duplicate', 'Probable match' with color-coded badges. Simplified the upload page — single drop zone for the suspicious image, optional supporting evidence as a secondary section. Simplified descriptions throughout.",
-  },
-  {
-    user: "Sunita T., 42, Women's Helpline Counsellor, Ranchi",
-    feedback: "We handle 5-6 cases per week of women whose photos are leaked by ex-partners. We have no technical tools. We just tell them to complain to the cyber cell. If this tool works, it would change everything. But our internet is slow — will this work on a 10 Mbps connection?",
-    after: "Benchmarked page load at ~800KB total. Added optimised image compression. The scan runs server-side so it works regardless of client bandwidth. Removed heavy dependencies. Confirmed working on 5Mbps connections via Lighthouse testing.",
-  },
-  {
     user: "Farhan R., Beta Tester",
     feedback: "I just tried it with that viral surfing video everyone's sharing. It scanned and showed 4 different sites where the same video was posted. Pretty wild. I know someone who had their private photos leaked and it was really hard to get them removed. This would have helped. Sending them the link. You should mention that in your pitch.",
     after: "Added this testimonial to the pitch deck. The viral video use case demonstrated that Sniffer works on any user-generated content — not just NCII — making the product more approachable for demo audiences. Word-of-mouth referral path validated: user → victim.",
@@ -196,7 +176,7 @@ export default function PitchPage() {
             </span>
             <span className="text-[10px] font-mono uppercase tracking-widest text-[#a8a29e]">User Validation</span>
           </div>
-          <h2 className="font-serif text-2xl sm:text-3xl font-normal leading-tight tracking-tight text-[#0a0a0a] mb-3 mt-4">We pitched to 5 real people. Here&apos;s what changed.</h2>
+          <h2 className="font-serif text-2xl sm:text-3xl font-normal leading-tight tracking-tight text-[#0a0a0a] mb-3 mt-4">We pitched to real people. Here&apos;s what changed.</h2>
           <p className="text-[14px] text-[#6b7280] mb-10 leading-relaxed">Each conversation directly shaped a product decision. Below is the raw feedback log.</p>
           <div className="space-y-6">
             {FEEDBACK_LOG.map((entry, i) => (
