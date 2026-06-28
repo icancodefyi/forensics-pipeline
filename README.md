@@ -1,171 +1,233 @@
-# Impic AlgoForge 26 (monorepo)
+<p align="center">
+  <img src="apps/web/public/logo.png" alt="Sniffer" width="64" height="64" />
+</p>
 
-Hackathon monorepo containing the full **Sniffer**-derived stack: Next.js web app (`@sniffer/web`) and three FastAPI services. Product rebranding and UX work can proceed on top of this base.
+<h1 align="center">Sniffer</h1>
 
-Upstream-style overview:
+<p align="center">
+  <strong>Open-Source NCII Leak Discovery & Automated Takedown Platform</strong>
+</p>
 
-Monorepo for image authenticity analysis, domain intelligence lookup, and takedown guidance.
+<p align="center">
+  Upload one image. Scan 90+ domains. Generate takedown requests in 30 seconds.
+</p>
 
-Detailed version: [detail.md](detail.md)
+<p align="center">
+  <a href="https://sniffer.impiclabs.com">Live Demo</a> ·
+  <a href="https://sniffer.impiclabs.com/leak?demo=1">Try the Scan</a> ·
+  <a href="https://sniffer.impiclabs.com/pitch">Pitch Deck</a>
+</p>
 
-## Overview
+<br/>
 
-Main flow:
+## The Problem
 
-1. Create a case.
-2. Upload suspicious image (and optional reference image).
-3. Run analysis.
-4. Query intelligence and takedown services.
-5. View report and dashboard data.
+Once intimate content is leaked, it spreads across multiple websites, mirror networks, and CDNs within hours. Victims must:
 
-## Services
+- Manually discover every copy across dozens of sites
+- Document each with screenshots, URLs, and timestamps
+- Identify hosting infrastructure for each platform
+- File separate takedown requests — each with different forms, contacts, and legal requirements
 
-- Web app: Next.js app, auth, UI, API proxy routes
-- Analysis service: FastAPI service for case, analysis, discovery, and registry
-- Intelligence service: FastAPI domain/provider/network lookup
-- Takedown service: FastAPI removal guidance lookup and scrape fallback
+This takes **3-4 hours per case**. Most victims never find all copies.
 
-## Architecture
+## The Solution
 
-```mermaid
-flowchart LR
-    U[User] --> W[Web App :3000]
-    W --> A[Analysis API :8000]
-    W --> I[Intelligence API :8002]
-    W --> T[Takedown API :8003]
-    W --> M[(MongoDB)]
+**Sniffer** automates the complete response workflow:
+
+1. **Upload** one reference image or video
+2. **Fingerprint** using a 3-tier perceptual matching engine
+3. **Scan** 91+ high-risk domains and mirror networks in parallel
+4. **Evidence** automatically collects URLs, hashes, CDN info, timestamps
+5. **Takedown** generates platform-specific DMCA/abuse requests with one click
+
+<br/>
+
+## Key Features
+
+| Feature | Description |
+|---------|-------------|
+| **3-Tier Matching Engine** | pHash (99% confidence) + ORB features (85-95%) + HSV histogram (75-85%) — detects crops, watermarks, brightness edits without deep learning |
+| **91-Domain Scan Network** | Pre-indexed high-risk domains across 2+ mirror networks (LTD Network, TTCACHE Network) |
+| **Automated Takedown** | Generates platform-specific DMCA requests, abuse reports, and legal templates with contact emails and removal portal links |
+| **Infrastructure Intelligence** | Identifies CDN providers, hosting networks, and mirror infrastructure for each domain |
+| **Court-Ready Evidence** | PDF reports with SHA-256 hashes, confidence scores, timestamps, and case references |
+| **Privacy-First** | No PII stored. Anonymous case IDs. Images hashed locally before processing. |
+| **Bulk Takedown** | Escalate all detected domains simultaneously with one case-wide removal packet |
+
+<br/>
+
+## Matching Engine
+
 ```
+┌─────────────────────────────────────────────────────────┐
+│                   3-TIER MATCHING                       │
+├──────────────┬──────────────────┬───────────────────────┤
+│    pHash     │   ORB Features   │   HSV Histogram       │
+│   (DCT)      │   (Keypoints)    │   (Color Dist.)       │
+│  99% conf.   │   85-95% conf.   │   75-85% conf.        │
+├──────────────┼──────────────────┼───────────────────────┤
+│ Exact copies │ Cropped images   │ Brightness edits      │
+│ Resized      │ Watermarked      │ Filter changes        │
+│ Recompressed │ Rotated          │ Contrast manipulation  │
+└──────────────┴──────────────────┴───────────────────────┘
+```
+
+## Business Model
+
+| Tier | Price | Who | Key Features |
+|------|-------|-----|-------------|
+| **Survivor** | Free | Victims | Core NCII discovery, takedown guidance, email support |
+| **Professional** | ₹499/mo | Lawyers, NGOs | Bulk scanning, PDF reports, multi-case dashboard, priority support |
+| **Enterprise** | ₹9,999/mo | Platforms, large orgs | White-label reports, API access, SLA, dedicated onboarding |
+
+**Unit Economics (at 1K users):**
+- MRR: ₹5.74 Lakhs
+- Gross Margin: 99.1%
+- Market: 5.7M+ NCII victims in India
+- TAM: ₹240 Cr/year
+
+## Impact & Results
+
+- **5 videos successfully removed** from hosting platforms
+- **91+ domains indexed** across 2 mirror networks
+- **95% of takedown requests auto-submitted**
+- **80% removal rate** during testing
+- **10× faster** than manual investigation process
 
 ## Tech Stack
 
-- Frontend: Next.js 16, React 19, TypeScript, Tailwind CSS
-- Backend: Python 3.11+, FastAPI, Uvicorn, Pydantic
-- Data: MongoDB + CSV datasets
-- Tooling: pnpm workspaces
+| Layer | Technologies |
+|-------|-------------|
+| **Frontend** | Next.js 16, React 19, TypeScript, Tailwind CSS v4, Shadcn UI, Framer Motion |
+| **Backend** | Python 3.11+, FastAPI, Uvicorn, Pydantic |
+| **Matching** | OpenCV, NumPy, Pillow |
+| **Database** | MongoDB, Redis |
+| **Infrastructure** | Docker, Caddy (reverse proxy), systemd |
+| **Auth** | NextAuth.js, Magic Link |
+
+## Architecture
+
+```
+┌─────────┐     ┌──────────────┐     ┌──────────────────┐
+│  User   │────▶│  Web App     │────▶│  Analysis API    │
+│ Browser │     │  :3001       │     │  :8000           │
+└─────────┘     └──────┬───────┘     └────────┬─────────┘
+                       │                       │
+                       │              ┌────────▼─────────┐
+                       │              │  Intelligence API│
+                       ├──────────────▶  :8002           │
+                       │              └──────────────────┘
+                       │              ┌──────────────────┐
+                       └──────────────▶  Takedown API    │
+                                      │  :8003           │
+                                      └──────────────────┘
+```
 
 ## Repository Layout
 
-```text
-apps/web/                 Next.js frontend + API routes + auth + dashboard
-services/analysis/        FastAPI analysis service
-services/intelligence/    FastAPI intelligence service
-services/takedown/        FastAPI takedown service
+```
+apps/web/                 Next.js frontend + API proxy routes + auth
+├── app/
+│   ├── leak/             Image upload + scan page
+│   ├── report/[caseId]/  Investigation report with evidence
+│   ├── pitch/            Full pitch deck with business model
+│   ├── takedown/         Bulk takedown workflow
+│   └── ...
+├── components/
+│   ├── landing/          Landing page sections
+│   ├── report/           Report components (ContentTrace, LeakActionConsole, etc.)
+│   └── ui/               Reusable UI primitives
+│
+services/
+├── analysis/             FastAPI analysis service (case management, discovery)
+├── intelligence/         FastAPI intelligence service (domain lookup, CDN detection)
+└── takedown/             FastAPI takedown service (removal guidance, contact lookup)
 ```
 
-## API Endpoints
+## Live Demo
 
-### Analysis Service (`:8000`)
+**URL:** [https://sniffer.impiclabs.com](https://sniffer.impiclabs.com)
 
-- POST `/api/cases/`
-- GET `/api/cases/{case_id}`
-- POST `/api/analysis/{case_id}/run`
-- GET `/api/analysis/{case_id}/result`
-- POST `/api/analysis/{case_id}/discover`
-- GET `/api/analysis/{case_id}/discover`
-- POST `/api/registry/`
-- GET `/api/registry/`
-- GET `/api/registry/check/{file_hash}`
-- POST `/api/registry/takedown-notice`
-- GET `/api/dashboard/`
-- GET `/health`
-
-### Intelligence Service (`:8002`)
-
-- GET `/api/v1/intelligence/{domain}`
-- GET `/api/v1/intelligence/`
-- GET `/health`
-
-### Takedown Service (`:8003`)
-
-- GET `/api/v1/takedown/{domain}`
-- GET `/api/v1/takedown/`
-- GET `/health`
-
-### Web API Routes
-
-- `/api/cases/*`
-- `/api/intelligence/[domain]`
-- `/api/takedown/[domain]`
-- `/api/user/cases`
-- `/api/dashboard/overview`
+The app is deployed on a VPS with Caddy reverse proxy:
+- Frontend: port 3001
+- Backend API: port 8000 (`/api/*`)
+- All services run via systemd
 
 ## Local Setup
 
-Prerequisites:
+### Prerequisites
 
 - Node.js 20+
 - pnpm 9+
 - Python 3.11+
 
-Install Node dependencies and create a **shared** Python virtualenv used by pnpm scripts (path: `services/.venv`):
+### Quick Start
 
 ```bash
+# Clone & install
+git clone https://github.com/icancodefyi/sniffer-forensics.git
+cd sniffer-forensics
 pnpm install
 
+# Set up Python virtual environment
 cd services
 python -m venv .venv
-
-# Windows
-.venv\Scripts\activate
-
-# macOS/Linux
 source .venv/bin/activate
-
 pip install -r analysis/requirements.txt
 pip install -r intelligence/requirements.txt
 pip install -r takedown/requirements.txt
 cd ..
 
+# Start all services (web + 3 APIs)
 pnpm dev
 ```
 
-Alternatively, from repo root: `pnpm install:py` after `services/.venv` exists and dependencies are installed once.
+### Environment Variables
 
-Expected local ports:
+Copy `apps/web/.env.example` → `apps/web/.env.local` and configure:
 
-- Web: `3000`
-- Analysis: `8000`
-- Intelligence: `8002`
-- Takedown: `8003`
+- `MONGODB_URI` — MongoDB connection string
+- `NEXT_PUBLIC_API_URL` — Analysis API URL (default: `http://localhost:8000`)
+- `INTELLIGENCE_SERVICE_URL` — Intelligence API URL (default: `http://localhost:8002`)
+- `TAKEDOWN_SERVICE_URL` — Takedown API URL (default: `http://localhost:8003`)
 
-## Environment Variables
+### Expected Ports
 
-Copy `apps/web/.env.example` to `apps/web/.env.local` for local development.
+| Service | Port |
+|---------|------|
+| Web App | 3001 |
+| Analysis API | 8000 |
+| Intelligence API | 8002 |
+| Takedown API | 8003 |
 
-### Web (`apps/web/.env.local`)
+## API Endpoints
 
-Required:
+### Analysis (`:8000`)
+- `POST /api/cases/` — Create case
+- `GET /api/cases/{case_id}` — Get case
+- `POST /api/analysis/{case_id}/run` — Run analysis
+- `GET /api/analysis/{case_id}/discover` — Get discovery results
+- `POST /api/registry/` — Register content
+- `GET /api/dashboard/` — Dashboard stats
 
-- `MONGODB_URI`
-- `NEXT_PUBLIC_API_URL`
-- `INTELLIGENCE_SERVICE_URL`
-- `TAKEDOWN_SERVICE_URL`
+### Intelligence (`:8002`)
+- `GET /api/v1/intelligence/{domain}` — Domain intelligence lookup
+- `GET /api/v1/intelligence/` — List all intelligence data
 
-Optional (email auth):
+### Takedown (`:8003`)
+- `GET /api/v1/takedown/{domain}` — Domain takedown info
+- `GET /api/v1/takedown/` — List all takedown data
 
-- `EMAIL_SERVER_HOST`
-- `EMAIL_SERVER_PORT`
-- `EMAIL_SERVER_USER`
-- `EMAIL_SERVER_PASSWORD`
-- `EMAIL_FROM`
-- `NEXTAUTH_URL`
-- `NEXTAUTH_SECRET`
+## Links
 
-`apps/web/.env.production` contains **non-secret placeholders** so `pnpm build` succeeds without a local file; override with `.env.production.local` in real deployments.
+- **Live App:** [sniffer.impiclabs.com](https://sniffer.impiclabs.com)
+- **Pitch Page:** [sniffer.impiclabs.com/pitch](https://sniffer.impiclabs.com/pitch)
+- **Try Demo:** [sniffer.impiclabs.com/leak?demo=1](https://sniffer.impiclabs.com/leak?demo=1)
+- **GitHub:** [github.com/icancodefyi/sniffer-forensics](https://github.com/icancodefyi/sniffer-forensics)
 
-### Analysis (`services/analysis/.env`)
+---
 
-- `HF_TOKEN` (optional, model-dependent) — see `services/analysis/.env.example`
-
-### Intelligence (`services/intelligence/.env`)
-
-- `INTELLIGENCE_PORT` (optional)
-- `ALLOWED_ORIGINS` (recommended)
-- `INTELLIGENCE_DATA_PATH` (optional)
-
-### Takedown (`services/takedown/.env`)
-
-- `TAKEDOWN_PORT` (optional)
-- `ALLOWED_ORIGINS` (recommended)
-- `TAKEDOWN_DATA_PATH` (optional)
-- `SCRAPE_TIMEOUT` (optional)
+<p align="center">
+  <strong>HACKVERSE 2026</strong> · Built by <a href="https://github.com/icancodefyi">Impic Labs</a>
+</p>

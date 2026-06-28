@@ -15,6 +15,15 @@ import {
 import { buildCaseRef } from "./utils";
 import { openMailtoDraft } from "@/lib/mailto";
 
+function GmailSvg({ className = "w-3.5 h-3.5" }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none">
+      <rect x="2" y="4" width="20" height="16" rx="2" fill="#EA4335" />
+      <path d="M2 6l10 7L22 6" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
 const FORCE_MOCK_LOOKUP = false;
 
@@ -405,15 +414,17 @@ export function LeakActionConsole({ caseId }: Props): JSX.Element {
                         </div>
                         {takedown?.found ? (
                           <>
-                            {[
-                              ["Method", takedown.removal_type?.replace(/_/g, " ")],
-                              ["Contact", takedown.contact_email],
-                            ].map(([label, val]) => (
-                              <div key={label as string}>
-                                <p className="text-[10px] text-[#9ca3af]">{label}</p>
-                                <p className="text-[13px] font-medium text-[#0a0a0a] break-all">{(val as string) ?? "Not listed"}</p>
-                              </div>
-                            ))}
+                            <div>
+                              <p className="text-[10px] text-[#9ca3af]">Method</p>
+                              <p className="text-[13px] font-medium text-[#0a0a0a] break-all">{takedown.removal_type?.replace(/_/g, " ") ?? "Not listed"}</p>
+                            </div>
+                            <div>
+                              <p className="text-[10px] text-[#9ca3af]">Contact</p>
+                              <p className="inline-flex items-center gap-1.5 text-[13px] font-medium text-[#0a0a0a] break-all">
+                                <GmailSvg />
+                                {takedown.contact_email}
+                              </p>
+                            </div>
                             <div className="flex flex-wrap gap-2 pt-1">
                               {takedown.removal_page && (
                                 <a href={takedown.removal_page} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 rounded-lg bg-[#0a0a0a] px-3.5 py-2 text-[11px] font-semibold text-white hover:bg-[#1a1a1a] transition-colors">
@@ -434,6 +445,7 @@ export function LeakActionConsole({ caseId }: Props): JSX.Element {
                                   }}
                                   className="inline-flex items-center gap-1.5 rounded-lg border border-[#e8e4de] bg-white px-3.5 py-2 text-[11px] font-semibold text-[#374151] hover:border-[#0a0a0a] transition-colors"
                                 >
+                                  <GmailSvg />
                                   Email draft
                                 </button>
                               )}
@@ -479,13 +491,19 @@ export function LeakActionConsole({ caseId }: Props): JSX.Element {
                         ["Network", intel?.network ?? modalDomain?.network ?? "Unknown"],
                         ["CDN", intel?.cdn_provider ?? "Unknown"],
                         ["Route", takedown?.removal_type?.replace(/_/g, " ") ?? "Manual"],
-                        ["Contact", takedown?.contact_email ?? "Not listed"],
                       ].map(([label, val]) => (
                         <div key={label as string}>
                           <p className="text-[10px] text-[#9ca3af]">{label}</p>
                           <p className="text-[12px] font-medium text-[#0a0a0a] break-all">{(val as string) ?? "—"}</p>
                         </div>
                       ))}
+                      <div>
+                        <p className="text-[10px] text-[#9ca3af]">Contact</p>
+                        <p className="inline-flex items-center gap-1.5 text-[12px] font-medium text-[#0a0a0a] break-all">
+                          <GmailSvg />
+                          {takedown?.contact_email ?? "Not listed"}
+                        </p>
+                      </div>
                     </div>
 
                     <div className="rounded-xl border border-[#e8e4de] bg-white p-4 space-y-2.5">
@@ -519,6 +537,7 @@ export function LeakActionConsole({ caseId }: Props): JSX.Element {
                             }}
                             className="inline-flex items-center gap-1.5 rounded-lg border border-[#e8e4de] bg-white px-3 py-1.5 text-[11px] font-semibold text-[#374151] hover:border-[#0a0a0a] transition-colors"
                           >
+                            <GmailSvg />
                             Email draft
                           </button>
                         )}

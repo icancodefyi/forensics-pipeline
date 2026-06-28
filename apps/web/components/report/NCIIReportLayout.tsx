@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useCallback, useState } from "react";
 import { ContentTrace } from "./ContentTrace";
 import { LeakActionConsole } from "./LeakActionConsole";
 import { ReportWellbeingLegal } from "./ReportWellbeingLegal";
@@ -36,6 +37,16 @@ export function NCIIReportLayout({
   onSaveCase,
   sessionUserId,
 }: Props) {
+  const [showPrintTip, setShowPrintTip] = useState(false);
+
+  const handleDownloadPdf = useCallback(() => {
+    setShowPrintTip(true);
+    setTimeout(() => {
+      window.print();
+      setTimeout(() => setShowPrintTip(false), 3000);
+    }, 800);
+  }, []);
+
   const caseRef = buildCaseRef(caseId);
   const reportMeta = [
     { label: "Date", value: formatDate(caseData.created_at) },
@@ -87,7 +98,7 @@ export function NCIIReportLayout({
               </span>
             )}
             <button
-              onClick={() => window.print()}
+              onClick={handleDownloadPdf}
               className="inline-flex items-center gap-1.5 rounded-lg bg-[#0a0a0a] px-3.5 py-1.5 text-[11.5px] font-medium text-white hover:bg-[#1a1a1a] transition-colors"
             >
               <svg width="11" height="11" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
@@ -95,10 +106,36 @@ export function NCIIReportLayout({
                 <path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2" />
                 <rect x="6" y="14" width="12" height="8" />
               </svg>
-              Download
+              Download PDF
             </button>
           </div>
         </div>
+
+        {showPrintTip && (
+          <div className="absolute inset-x-0 top-full mt-1 mx-4 sm:mx-6 z-30 animate-in slide-in-from-top-2 fade-in duration-300">
+            <div className="rounded-xl border border-[#e8e4de] bg-white px-4 py-3 shadow-[0_12px_40px_-12px_rgba(0,0,0,0.25)] flex items-center gap-3">
+              <div className="w-6 h-6 rounded-full bg-[#0a0a0a] flex items-center justify-center shrink-0">
+                <svg width="11" height="11" fill="none" stroke="white" strokeWidth="2.5" viewBox="0 0 24 24">
+                  <polyline points="6 9 6 2 18 2 18 9" />
+                  <path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2" />
+                  <rect x="6" y="14" width="12" height="8" />
+                </svg>
+              </div>
+              <div>
+                <p className="text-[12px] font-medium text-[#0a0a0a]">Print dialog opened</p>
+                <p className="text-[11px] text-[#6b7280]">Select <span className="font-medium">Save as PDF</span> as the destination, then click Save.</p>
+              </div>
+              <button
+                onClick={() => setShowPrintTip(false)}
+                className="ml-auto shrink-0 rounded-md p-1 hover:bg-[#f0ede8] transition-colors"
+              >
+                <svg width="14" height="14" fill="none" stroke="#9ca3af" strokeWidth="2" viewBox="0 0 24 24">
+                  <path d="M18 6L6 18M6 6l12 12" strokeLinecap="round" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        )}
       </header>
 
       {/* ── Print-only document header ─────────────────────────────────────── */}
@@ -366,7 +403,7 @@ export function NCIIReportLayout({
             <Link href="/leak" className="text-[12px] font-medium text-[#0a0a0a] hover:opacity-60 transition-opacity">
               New Investigation
             </Link>
-            <button onClick={() => window.print()} className="text-[12px] text-[#6b7280] hover:text-[#0a0a0a] transition-colors">
+            <button onClick={handleDownloadPdf} className="text-[12px] text-[#6b7280] hover:text-[#0a0a0a] transition-colors">
               Print Report
             </button>
           </div>

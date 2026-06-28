@@ -188,3 +188,34 @@
   background-image: radial-gradient(circle, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
   background-size: 24px 24px;
 }
+
+/* ── Print / PDF styles ── */
+
+@page {
+  margin: 18mm 14mm;
+}
+
+@page :first {
+  margin-top: 22mm;
+}
+
+@media print {
+  html {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  body {
+    font-size: 11pt;
+    line-height: 1.5;
+    color: #000;
+  }
+
+  .print-page-break {
+    page-break-before: always;
+  }
+
+  .print-avoid-break {
+    page-break-inside: avoid;
+  }
+}
