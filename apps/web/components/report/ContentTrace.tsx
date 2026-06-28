@@ -216,165 +216,154 @@ export function ContentTrace({ caseId }: Props) {
 
   if (!trace) return null;
 
-  const summary = `${trace.domains_scanned} domains · ${trace.pages_scanned} pages · ${trace.candidates_evaluated} assets evaluated`;
+  const summaryStats = [
+    { value: String(trace.domains_scanned), label: "Domains scanned" },
+    { value: String(trace.pages_scanned), label: "Pages crawled" },
+    { value: String(trace.candidates_evaluated), label: "Assets evaluated" },
+  ];
 
   return (
-    <div className="rounded-xl border border-[#e8e4de] bg-white overflow-hidden shadow-sm">
+    <div className="rounded-2xl border border-[#e8e4de] bg-white overflow-hidden shadow-[0_4px_24px_-12px_rgba(15,23,42,0.06)]">
 
-      {/* Header */}
-      <div className="border-b border-[#e8e4de] px-5 py-4 flex items-center justify-between gap-4 bg-[#fafaf8]">
-        <div>
-          <p className="text-[9px] font-mono text-[#c4bdb5] uppercase tracking-[0.2em] mb-1">
-            {t.report.distributionTrace}
-          </p>
-          <p className="text-[14px] font-semibold text-[#0a0a0a]">Visual match scan</p>
-          <p className="text-[12px] text-[#6b7280] mt-0.5 leading-relaxed">
-            Perceptual fingerprinting across high-risk domains and known mirror networks.
-          </p>
+      {/* ── Header ── */}
+      <div className="border-b border-[#e8e4de] px-6 py-5 bg-gradient-to-br from-[#fafaf8] to-white">
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <div className="flex items-center gap-2 mb-2">
+              <div className="w-7 h-7 rounded-lg bg-[#0a0a0a] flex items-center justify-center shrink-0">
+                <svg width="14" height="14" fill="none" stroke="white" strokeWidth="2" viewBox="0 0 24 24">
+                  <circle cx="11" cy="11" r="8" />
+                  <path d="M21 21l-4.35-4.35" strokeLinecap="round" />
+                </svg>
+              </div>
+              <p className="font-mono text-[9px] uppercase tracking-[0.22em] text-[#a8a29e]">
+                {t.report.distributionTrace}
+              </p>
+            </div>
+            <h3 className="font-serif text-[20px] font-medium text-[#0a0a0a] tracking-tight leading-snug mb-1">
+              Visual match scan
+            </h3>
+            <p className="text-[13px] text-[#6b7280] leading-relaxed max-w-md">
+              Perceptual fingerprinting across high-risk domains and known mirror networks.
+            </p>
+          </div>
+          <div className="shrink-0">
+            {trace.direct_matches.length > 0 ? (
+              <div className="inline-flex items-center gap-2 rounded-full border border-red-200 bg-red-50 px-3.5 py-1.5">
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75 animate-ping" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-red-500" />
+                </span>
+                <span className="font-mono text-[10px] font-semibold uppercase tracking-widest text-red-700">
+                  {trace.direct_matches.length} match{trace.direct_matches.length > 1 ? "es" : ""}
+                </span>
+              </div>
+            ) : (
+              <div className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3.5 py-1.5">
+                <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                <span className="font-mono text-[10px] font-semibold uppercase tracking-widest text-emerald-700">Clear</span>
+              </div>
+            )}
+          </div>
         </div>
-        <div className="shrink-0 flex flex-col items-end gap-1.5">
-          {trace && trace.direct_matches.length > 0 ? (
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-red-200 bg-red-50 px-2.5 py-1 text-[10px] font-mono text-red-700 font-semibold">
-              <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
-              {trace.direct_matches.length} match{trace.direct_matches.length > 1 ? "es" : ""} found
-            </span>
-          ) : (
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-[10px] font-mono text-emerald-700">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-              Scan complete
-            </span>
+
+        {/* Scan stats row */}
+        <div className="mt-5 flex flex-wrap gap-3">
+          {summaryStats.map((stat) => (
+            <div key={stat.label} className="flex items-baseline gap-1.5">
+              <span className="font-mono text-[16px] font-bold text-[#0a0a0a] tabular-nums">{stat.value}</span>
+              <span className="text-[11px] text-[#9ca3af]">{stat.label}</span>
+            </div>
+          ))}
+          {trace.prioritized_network && (
+            <div className="flex items-center gap-1.5 ml-auto">
+              <svg width="11" height="11" fill="none" stroke="#6366f1" strokeWidth="2.5" viewBox="0 0 24 24">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+              </svg>
+              <span className="text-[11px] font-medium text-indigo-600">Priority: {trace.prioritized_network}</span>
+            </div>
           )}
         </div>
       </div>
 
-      <div className="px-5 py-5 space-y-6">
-
-        {/* Scan summary chips */}
-        <div className="flex flex-wrap gap-2">
-          <span className="rounded-lg border border-[#e8e4de] bg-[#fafaf8] px-2.5 py-1 text-[11px] font-mono text-[#6b7280]">
-            {summary}
-          </span>
-          {trace.prioritized_network && (
-            <span className="rounded-lg border border-indigo-100 bg-indigo-50 px-2.5 py-1 text-[11px] font-mono text-indigo-600">
-              Priority: {trace.prioritized_network}
-            </span>
-          )}
-        </div>
+      {/* ── Body ── */}
+      <div className="px-6 py-6 space-y-8">
 
         {/* Direct matches */}
         {trace.direct_matches.length > 0 && (
           <div>
-            {/* Urgency alert banner */}
-            <div className="mb-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 flex items-start gap-3">
-              <svg width="16" height="16" fill="none" stroke="#dc2626" strokeWidth="2" viewBox="0 0 24 24" className="shrink-0 mt-0.5">
-                <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" strokeLinecap="round" strokeLinejoin="round" />
-                <line x1="12" y1="9" x2="12" y2="13" strokeLinecap="round" />
-                <line x1="12" y1="17" x2="12.01" y2="17" strokeLinecap="round" />
-              </svg>
+            {/* Urgency banner */}
+            <div className="mb-6 rounded-xl border border-red-100 bg-gradient-to-r from-red-50 to-rose-50/40 px-5 py-4 flex items-start gap-4">
+              <div className="w-9 h-9 rounded-lg bg-red-100 border border-red-200 flex items-center justify-center shrink-0">
+                <svg width="17" height="17" fill="none" stroke="#dc2626" strokeWidth="2" viewBox="0 0 24 24">
+                  <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" strokeLinecap="round" strokeLinejoin="round" />
+                  <line x1="12" y1="9" x2="12" y2="13" strokeLinecap="round" />
+                  <line x1="12" y1="17" x2="12.01" y2="17" strokeLinecap="round" />
+                </svg>
+              </div>
               <div>
-                <p className="text-[12.5px] font-semibold text-red-800">
-                  Content is actively circulating — {trace.direct_matches.length} site{trace.direct_matches.length > 1 ? "s" : ""} confirmed
+                <p className="text-[13.5px] font-semibold text-red-900 tracking-tight">
+                  Content is actively circulating
                 </p>
-                <p className="text-[11.5px] text-red-700 mt-0.5 leading-relaxed">
-                  Visual fingerprinting matched this image across known leak networks. Immediate takedown action is recommended.
+                <p className="text-[12px] text-red-700 mt-0.5 leading-relaxed">
+                  {trace.direct_matches.length} site{trace.direct_matches.length > 1 ? "s" : ""} confirmed hosting this image.
+                  Immediate takedown action is recommended.
                 </p>
               </div>
             </div>
 
-            <p className="text-[11px] font-mono text-[#a8a29e] uppercase tracking-widest mb-3">
-              Direct visual matches ({trace.direct_matches.length})
-            </p>
-            <div className="space-y-3">
-              {trace.direct_matches.map((match) => {
-                const isExact = match.match_type === "exact";
-                return (
-                  <div
-                    key={`${match.domain}-${match.image_url}`}
-                    className={`rounded-xl border p-4 ${
-                      isExact
-                        ? "border-red-200 bg-red-50"
-                        : "border-[#e8e4de] bg-[#fafaf8]"
-                    }`}
-                  >
-                    {/* Exact match top alert strip */}
-                    {isExact && (
-                      <div className="flex items-center gap-2 mb-3 pb-3 border-b border-red-100">
-                        <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse shrink-0" />
-                        <p className="text-[11px] font-mono font-bold text-red-700 uppercase tracking-wider">
-                          FOUND — Content confirmed live on this domain
-                        </p>
-                      </div>
-                    )}
+            {/* Section label */}
+            <div className="flex items-center gap-3 mb-4">
+              <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#a8a29e]">
+                Confirmed matches
+              </p>
+              <span className="font-mono text-[10px] text-[#0a0a0a] font-semibold bg-[#f0ede8] rounded px-1.5 py-0.5">
+                {trace.direct_matches.length}
+              </span>
+              <div className="flex-1 h-px bg-[#e8e4de]" />
+            </div>
 
-                    <div className="flex items-start gap-3 mb-3">
-                      <PlatformLogo domain={match.domain} size={40} />
-                      <div className="flex-1 min-w-0">
-                        <div className="flex flex-wrap items-center gap-2 mb-1.5">
-                          <p className={`text-[13px] font-semibold ${isExact ? "text-red-900" : "text-[#0a0a0a]"}`}>
-                            {match.domain}
-                          </p>
-                          {match.network && (
-                            <span className="inline-flex items-center rounded-full border border-[#e8e4de] bg-white px-2 py-0.5 text-[10px] font-mono text-[#6b7280]">
-                              {match.network}
-                            </span>
-                          )}
-                        </div>
-                        <div className="flex flex-wrap gap-2">
-                          <span className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-[10px] font-mono font-semibold ${MATCH_CLASSES[match.match_type]}`}>
-                            {MATCH_LABELS[match.match_type]}
-                          </span>
-                          <span className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-[10px] font-mono ${
-                            isExact ? "border-red-200 bg-white text-red-700" : "border-[#e8e4de] bg-white text-[#6b7280]"
-                          }`}>
-                            {match.confidence}% confidence
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Confidence gauge + key metrics */}
-                    <div className="flex items-center gap-4 mb-3">
-                      <ConfidenceGauge confidence={match.confidence} />
-                      <div className="flex gap-2">
-                        <MetricTile label="pHash Δ" value={String(match.phash_distance)} compact />
-                        <MetricTile label="SSIM" value={String(match.ssim_score)} compact />
-                      </div>
-                    </div>
-
-                    <div className="flex flex-wrap gap-3">
-                      <a href={match.page_url} target="_blank" rel="noreferrer"
-                        className={`text-[11.5px] font-medium hover:underline ${isExact ? "text-red-700" : "text-indigo-600"}`}>
-                        View page →
-                      </a>
-                      <a href={match.image_url} target="_blank" rel="noreferrer"
-                        className="text-[11.5px] font-medium text-[#6b7280] hover:text-[#0a0a0a] transition-colors">
-                        View image →
-                      </a>
-                    </div>
-                  </div>
-                );
-              })}
+            {/* Match cards */}
+            <div className="space-y-4">
+              {trace.direct_matches.map((match, idx) => (
+                <MatchCard key={`${match.domain}-${idx}`} match={match} />
+              ))}
             </div>
           </div>
         )}
 
-        {/* Related / sister domains */}
+        {/* Related domains */}
         {trace.related_domains && trace.related_domains.length > 0 && (
           <div>
-            <p className="text-[11px] font-mono text-[#a8a29e] uppercase tracking-widest mb-3">
-              Related domains ({trace.related_domains.length})
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-              {trace.related_domains.map((domain) => (
+            {/* Section label */}
+            <div className="flex items-center gap-3 mb-4">
+              <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#a8a29e]">
+                Related mirror domains
+              </p>
+              <span className="font-mono text-[10px] text-[#0a0a0a] font-semibold bg-[#f0ede8] rounded px-1.5 py-0.5">
+                {trace.related_domains.length}
+              </span>
+              <div className="flex-1 h-px bg-[#e8e4de]" />
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {trace.related_domains.map((domain, idx) => (
                 <div
-                  key={`${domain.network}-${domain.domain}`}
-                  className="rounded-xl border border-[#e8e4de] bg-[#fafaf8] p-3.5 flex items-start gap-3"
+                  key={`${domain.network}-${idx}`}
+                  className="group rounded-xl border border-[#e8e4de] bg-[#fafaf8] p-4 hover:border-[#9ca3af] hover:bg-white transition-all"
                 >
-                  <PlatformLogo domain={domain.domain} size={36} />
-                  <div className="min-w-0">
-                    <p className="text-[12.5px] font-semibold text-[#0a0a0a]">{domain.domain}</p>
-                    <p className="text-[10.5px] font-mono text-[#9ca3af] mt-0.5">{domain.network}</p>
-                    <p className="text-[11px] text-[#6b7280] mt-1 leading-relaxed">{domain.reason}</p>
+                  <div className="flex items-start gap-3">
+                    <PlatformLogo domain={domain.domain} size={38} />
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <p className="text-[13px] font-semibold text-[#0a0a0a] tracking-tight">{domain.domain}</p>
+                      </div>
+                      <p className="font-mono text-[10px] text-[#9ca3af] uppercase tracking-wider mb-2">{domain.network}</p>
+                      <p className="text-[11.5px] text-[#6b7280] leading-relaxed">{domain.reason}</p>
+                    </div>
+                    <svg width="14" height="14" fill="none" stroke="#c4bdb5" strokeWidth="2" viewBox="0 0 24 24" className="shrink-0 mt-1 group-hover:stroke-[#0a0a0a] transition-colors">
+                      <path d="M7 7h10v10M17 7L7 17" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
                   </div>
                 </div>
               ))}
@@ -386,46 +375,145 @@ export function ContentTrace({ caseId }: Props) {
   );
 }
 
-function MetricTile({ label, value, compact }: { label: string; value: string; compact?: boolean }) {
+/* ── Match card ────────────────────────────────────────────────────────── */
+
+function MatchCard({ match }: { match: DiscoveryResult["direct_matches"][number] }) {
+  const isExact = match.match_type === "exact";
+  const accent = isExact ? "#dc2626" : match.confidence >= 85 ? "#d97706" : "#6366f1";
+  const accentBg = isExact ? "bg-red-50" : match.confidence >= 85 ? "bg-amber-50" : "bg-indigo-50";
+  const accentBorder = isExact ? "border-red-200" : match.confidence >= 85 ? "border-amber-200" : "border-indigo-200";
+  const accentText = isExact ? "text-red-700" : match.confidence >= 85 ? "text-amber-700" : "text-indigo-700";
+
   return (
-    <div className={`rounded-lg border border-[#e8e4de] bg-white ${compact ? "px-2 py-1.5 min-w-[64px]" : "px-2.5 py-2"}`}>
-      <p className="text-[9px] font-mono uppercase tracking-[0.22em] text-[#9ca3af]">{label}</p>
-      <p className={`mt-0.5 font-medium text-[#0a0a0a] ${compact ? "text-[12px]" : "text-[11px]"}`}>{value}</p>
+    <div className={`rounded-xl border ${accentBorder} ${accentBg} overflow-hidden transition-all hover:shadow-[0_4px_20px_-8px_rgba(15,23,42,0.1)]`}>
+
+      {/* Status strip */}
+      {isExact && (
+        <div className="flex items-center gap-2 px-5 py-2 bg-red-100/60 border-b border-red-100">
+          <span className="relative flex h-1.5 w-1.5">
+            <span className="absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75 animate-ping" />
+            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-red-600" />
+          </span>
+          <p className="font-mono text-[9.5px] font-bold text-red-700 uppercase tracking-[0.18em]">
+            Content confirmed live
+          </p>
+        </div>
+      )}
+
+      <div className="px-5 py-5">
+        {/* Top: logo + domain + gauge */}
+        <div className="flex items-start gap-4 mb-4">
+          <PlatformLogo domain={match.domain} size={44} />
+
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2 mb-1">
+              <h4 className="text-[15px] font-semibold text-[#0a0a0a] tracking-tight">{match.domain}</h4>
+              {match.network && (
+                <span className="inline-flex items-center rounded-md border border-[#e8e4de] bg-white px-1.5 py-0.5 text-[9.5px] font-mono text-[#6b7280] uppercase tracking-wider">
+                  {match.network}
+                </span>
+              )}
+            </div>
+            <div className="flex items-center gap-2">
+              <span className={`inline-flex items-center gap-1.5 rounded-md border ${accentBorder} bg-white px-2 py-0.5 text-[10px] font-mono font-semibold ${accentText}`}>
+                <span className="w-1.5 h-1.5 rounded-full" style={{ background: accent }} />
+                {MATCH_LABELS[match.match_type] ?? match.match_type}
+              </span>
+            </div>
+          </div>
+
+          <ConfidenceGauge confidence={match.confidence} />
+        </div>
+
+        {/* Bottom: metrics + actions */}
+        <div className="flex items-end justify-between gap-4 pt-4 border-t border-[#e8e4de]/60">
+          {/* Metrics */}
+          <div className="flex gap-4">
+            <div>
+              <p className="font-mono text-[8.5px] uppercase tracking-[0.2em] text-[#9ca3af] mb-0.5">pHash Δ</p>
+              <p className="font-mono text-[15px] font-bold text-[#0a0a0a] tabular-nums leading-none">{match.phash_distance}</p>
+            </div>
+            <div>
+              <p className="font-mono text-[8.5px] uppercase tracking-[0.2em] text-[#9ca3af] mb-0.5">SSIM</p>
+              <p className="font-mono text-[15px] font-bold text-[#0a0a0a] tabular-nums leading-none">{match.ssim_score.toFixed(2)}</p>
+            </div>
+            <div>
+              <p className="font-mono text-[8.5px] uppercase tracking-[0.2em] text-[#9ca3af] mb-0.5">Asset</p>
+              <p className="font-mono text-[15px] font-bold text-[#0a0a0a] tabular-nums leading-none uppercase">{match.asset_type.split("/")[1] ?? match.asset_type}</p>
+            </div>
+          </div>
+
+          {/* Action buttons */}
+          <div className="flex items-center gap-2 shrink-0">
+            <a
+              href={match.page_url}
+              target="_blank"
+              rel="noreferrer"
+              className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-[11px] font-medium transition-all ${
+                isExact
+                  ? "bg-[#0a0a0a] text-white hover:bg-[#1a1a1a]"
+                  : "bg-white border border-[#e8e4de] text-[#0a0a0a] hover:border-[#0a0a0a]"
+              }`}
+            >
+              <svg width="11" height="11" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" strokeLinecap="round" strokeLinejoin="round" />
+                <polyline points="15 3 21 3 21 9" strokeLinecap="round" strokeLinejoin="round" />
+                <line x1="10" y1="14" x2="21" y2="3" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              View page
+            </a>
+            <a
+              href={match.image_url}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-[#e8e4de] bg-white px-3 py-1.5 text-[11px] font-medium text-[#374151] hover:border-[#9ca3af] transition-all"
+            >
+              <svg width="11" height="11" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <rect x="3" y="3" width="18" height="18" rx="2" />
+                <circle cx="8.5" cy="8.5" r="1.5" />
+                <polyline points="21 15 16 10 5 21" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              View image
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
 
+/* ── Confidence gauge ──────────────────────────────────────────────────── */
+
 function ConfidenceGauge({ confidence }: { confidence: number }) {
-  const radius = 26;
+  const radius = 28;
   const circumference = 2 * Math.PI * radius;
   const offset = circumference - (confidence / 100) * circumference;
-
   const color = confidence >= 90 ? "#dc2626" : confidence >= 80 ? "#d97706" : "#6366f1";
 
   return (
-    <div className="relative shrink-0">
-      <svg width="68" height="68" viewBox="0 0 68 68">
-        <circle cx="34" cy="34" r={radius} fill="none" stroke="#e8e4de" strokeWidth="5" />
+    <div className="relative shrink-0" style={{ width: 72, height: 72 }}>
+      <svg width="72" height="72" viewBox="0 0 72 72">
+        <circle cx="36" cy="36" r={radius} fill="none" stroke="#e8e4de" strokeWidth="4" />
         <circle
-          cx="34"
-          cy="34"
+          cx="36"
+          cy="36"
           r={radius}
           fill="none"
           stroke={color}
-          strokeWidth="5"
+          strokeWidth="4"
           strokeLinecap="round"
           strokeDasharray={circumference}
           strokeDashoffset={offset}
-          transform="rotate(-90 34 34)"
+          transform="rotate(-90 36 36)"
           className="transition-all duration-700"
         />
-        <text x="34" y="28" textAnchor="middle" fill={color} fontSize="14" fontWeight="700" fontFamily="ui-monospace,monospace">
-          {confidence}
-        </text>
-        <text x="34" y="41" textAnchor="middle" fill={color} fontSize="8" fontWeight="600" fontFamily="ui-monospace,monospace">
-          / 100
-        </text>
       </svg>
+      <div className="absolute inset-0 flex flex-col items-center justify-center">
+        <span className="font-mono text-[18px] font-bold leading-none tabular-nums" style={{ color }}>
+          {confidence}
+        </span>
+        <span className="font-mono text-[8px] mt-0.5" style={{ color }}>SCORE</span>
+      </div>
     </div>
   );
 }
