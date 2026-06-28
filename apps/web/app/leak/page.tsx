@@ -215,7 +215,6 @@ function LeakPageContent() {
       await new Promise<void>((res) => setTimeout(res, 2000)); /* 2s (was 5s) */
       router.push(`/report/${case_id}`);
     } catch (e) {
-      clearInterval(undefined as unknown as ReturnType<typeof setInterval>);
       setScanning(false);
       setProcessing(false);
       setCreatingCase(false);

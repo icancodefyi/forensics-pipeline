@@ -13,7 +13,6 @@ import {
 export default function Page() {
   return (
     <>
-    {/* this is the test comment  */}
       <Navbar />
       <main>
         <HeroSection />
