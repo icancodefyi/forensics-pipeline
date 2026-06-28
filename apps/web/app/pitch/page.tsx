@@ -30,9 +30,10 @@ const FEEDBACK_LOG = [
 ];
 
 const METRICS = [
-  { label: "Onboarding steps", before: "5 clicks", after: "3 clicks", reduction: "40%" },
-  { label: "Time to first result", before: "~2 min", after: "~45 sec", reduction: "62%" },
-  { label: "Page load size", before: "2.1 MB", after: "~800 KB", reduction: "62%" },
+  { label: "Onboarding steps", before: "4 clicks", after: "3 clicks", reduction: "25%" },
+  { label: "Screens to navigate", before: "3 pages", after: "2 pages", reduction: "33%" },
+  { label: "Scan overlay time", before: "~9.5s", after: "~5s", reduction: "47%" },
+  { label: "Time to first result", before: "~2 min", after: "~40 sec", reduction: "67%" },
   { label: "Jargon words per page", before: "~15", after: "≤3", reduction: "80%" },
 ];
 
@@ -506,9 +507,9 @@ export default function PitchPage() {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
             {[
-              { step: "Step 1", page: "Landing / Leak Page", action: "Select source platform + click Upload", click: "2 clicks", icon: "01" },
-              { step: "Step 2", page: "Upload Page", action: "Drop image + click Start Leak Scan", click: "2 clicks", icon: "02" },
-              { step: "Step 3", page: "Report", action: "View results, download PDF, start takedown", click: "1 click", icon: "03" },
+              { step: "Click 1", page: "Landing Page", action: "Click \"Start Investigation\" → goes to /leak", click: "1 click", icon: "01" },
+              { step: "Click 2", page: "Leak Page (combined)", action: "Select demo image or drop your own — platform pre-selected with logos", click: "1 click", icon: "02" },
+              { step: "Click 3", page: "Scan → Report", action: "Click \"Start Leak Scan\" → scan runs → report loads", click: "1 click", icon: "03" },
             ].map((s) => (
               <div key={s.step} className="rounded-xl border border-[#e8e4de] bg-white px-6 py-5 flex items-start gap-4">
                 <span className="text-[28px] font-mono text-[#d4cfc9] font-light leading-none">{s.icon}</span>
