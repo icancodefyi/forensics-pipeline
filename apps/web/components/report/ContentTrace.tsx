@@ -332,12 +332,13 @@ export function ContentTrace({ caseId }: Props) {
                       </div>
                     </div>
 
-                    {/* Metric row */}
-                    <div className="grid grid-cols-4 gap-2 mb-3">
-                      <MetricTile label="Asset" value={match.asset_type.split("/")[1]?.toUpperCase() ?? match.asset_type} />
-                      <MetricTile label="SSIM" value={String(match.ssim_score)} />
-                      <MetricTile label="pHash Δ" value={String(match.phash_distance)} />
-                      <MetricTile label="dHash Δ" value={String(match.dhash_distance)} />
+                    {/* Confidence gauge + key metrics */}
+                    <div className="flex items-center gap-4 mb-3">
+                      <ConfidenceGauge confidence={match.confidence} />
+                      <div className="flex gap-2">
+                        <MetricTile label="pHash Δ" value={String(match.phash_distance)} compact />
+                        <MetricTile label="SSIM" value={String(match.ssim_score)} compact />
+                      </div>
                     </div>
 
                     <div className="flex flex-wrap gap-3">
@@ -385,11 +386,46 @@ export function ContentTrace({ caseId }: Props) {
   );
 }
 
-function MetricTile({ label, value }: { label: string; value: string }) {
+function MetricTile({ label, value, compact }: { label: string; value: string; compact?: boolean }) {
   return (
-    <div className="rounded-lg border border-[#e8e4de] bg-white px-2.5 py-2">
+    <div className={`rounded-lg border border-[#e8e4de] bg-white ${compact ? "px-2 py-1.5 min-w-[64px]" : "px-2.5 py-2"}`}>
       <p className="text-[9px] font-mono uppercase tracking-[0.22em] text-[#9ca3af]">{label}</p>
-      <p className="mt-1 text-[11px] font-medium text-[#0a0a0a]">{value}</p>
+      <p className={`mt-0.5 font-medium text-[#0a0a0a] ${compact ? "text-[12px]" : "text-[11px]"}`}>{value}</p>
+    </div>
+  );
+}
+
+function ConfidenceGauge({ confidence }: { confidence: number }) {
+  const radius = 26;
+  const circumference = 2 * Math.PI * radius;
+  const offset = circumference - (confidence / 100) * circumference;
+
+  const color = confidence >= 90 ? "#dc2626" : confidence >= 80 ? "#d97706" : "#6366f1";
+
+  return (
+    <div className="relative shrink-0">
+      <svg width="68" height="68" viewBox="0 0 68 68">
+        <circle cx="34" cy="34" r={radius} fill="none" stroke="#e8e4de" strokeWidth="5" />
+        <circle
+          cx="34"
+          cy="34"
+          r={radius}
+          fill="none"
+          stroke={color}
+          strokeWidth="5"
+          strokeLinecap="round"
+          strokeDasharray={circumference}
+          strokeDashoffset={offset}
+          transform="rotate(-90 34 34)"
+          className="transition-all duration-700"
+        />
+        <text x="34" y="28" textAnchor="middle" fill={color} fontSize="14" fontWeight="700" fontFamily="ui-monospace,monospace">
+          {confidence}
+        </text>
+        <text x="34" y="41" textAnchor="middle" fill={color} fontSize="8" fontWeight="600" fontFamily="ui-monospace,monospace">
+          / 100
+        </text>
+      </svg>
     </div>
   );
 }
